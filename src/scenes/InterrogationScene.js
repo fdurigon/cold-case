@@ -1,6 +1,7 @@
 import caseManager from '../systems/CaseManager.js';
 import HUD from '../ui/HUD.js';
 import DialogBox from '../ui/DialogBox.js';
+import { drawPortrait } from '../ui/PortraitArt.js';
 
 const C = {
   bg:       0x0d0d0b,
@@ -36,8 +37,10 @@ export default class InterrogationScene extends Phaser.Scene {
     this.add.rectangle(0, 34, PORT_W, PORT_H, C.panel).setOrigin(0, 0);
     this.add.rectangle(PORT_W, 34, 1, PORT_H, C.border).setOrigin(0, 0);
 
-    this.add.image(PORT_W / 2, 34 + PORT_H * 0.38, sus.portrait)
-      .setOrigin(0.5, 0.5).setDisplaySize(160, 200);
+    // Portrait drawn procedurally — no pre-baked texture
+    const portH = Math.round(PORT_H * 0.5);
+    const portY = 34 + Math.round(PORT_H * 0.13);
+    drawPortrait(this, sus.id, PORT_W / 2, portY + portH / 2, PORT_W - 20, portH);
 
     this.add.text(PORT_W / 2, 34 + PORT_H * 0.68, sus.name, {
       fontSize: '16px', fontFamily: 'Georgia, serif', color: C.text

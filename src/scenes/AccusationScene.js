@@ -1,6 +1,7 @@
 import caseManager from '../systems/CaseManager.js';
 import reputationSystem from '../systems/ReputationSystem.js';
 import saveManager from '../systems/SaveManager.js';
+import { drawPortrait } from '../ui/PortraitArt.js';
 
 const C = {
   bg:      0x0d0d0b,
@@ -35,9 +36,8 @@ export default class AccusationScene extends Phaser.Scene {
 
     this.add.rectangle(W / 2, 62, 500, 1, C.border).setOrigin(0.5, 0);
 
-    // Suspect portrait
-    this.add.image(W / 2, 160, sus.portrait)
-      .setOrigin(0.5, 0.5).setDisplaySize(100, 125);
+    // Suspect portrait — drawn procedurally
+    drawPortrait(this, sus.id, W / 2, 160, 120, 140);
 
     this.add.text(W / 2, 232, sus.name, {
       fontSize: '18px', fontFamily: 'Georgia, serif', color: C.text
@@ -145,21 +145,63 @@ export default class AccusationScene extends Phaser.Scene {
       fontSize: '13px', fontFamily: 'Georgia, serif', color: C.accent
     }).setOrigin(0.5, 0.5);
 
-    // d20 die
-    const die = this.add.image(W / 2, 280, 'd20').setOrigin(0.5, 0.5).setDisplaySize(120, 120);
+    // d20 drawn with Graphics (no pre-baked texture — scales cleanly at any DPR)
+    const die = this._drawD20(W / 2, 280, 58);
 
     this.add.text(W / 2, 390, 'Clique no dado para rolar', {
       fontSize: '14px', fontFamily: 'Georgia, serif', color: C.text
     }).setOrigin(0.5, 0.5);
 
-    die.setInteractive({ useHandCursor: true });
-    die.on('pointerdown', () => {
-      die.disableInteractive();
+    // Invisible hit area over the d20
+    const dieHit = this.add.circle(W / 2, 280, 60, 0xffffff, 0)
+      .setInteractive({ useHandCursor: true });
+    dieHit.on('pointerdown', () => {
+      dieHit.disableInteractive();
       this._animateRoll(die, threshold, W);
     });
   }
 
+  _drawD20(x, y, r) {
+    const g = this.add.graphics();
+    const sides = 20;
+
+    // Outer circle (die boundary)
+    g.fillStyle(0x0e0c08);
+    g.fillCircle(x, y, r);
+    g.lineStyle(2, 0xc8962a, 1);
+    g.strokeCircle(x, y, r);
+
+    // Icosahedron face lines (6 spokes + inner hexagon)
+    g.lineStyle(1, 0xc8962a, 0.35);
+    for (let i = 0; i < 6; i++) {
+      const a = (i / 6) * Math.PI * 2 - Math.PI / 6;
+      const ir = r * 0.55;
+      g.beginPath();
+      g.moveTo(x, y);
+      g.lineTo(x + Math.cos(a) * r * 0.9, y + Math.sin(a) * r * 0.9);
+      g.strokePath();
+      // Inner hex ring
+      const nx = x + Math.cos(a) * ir;
+      const ny = y + Math.sin(a) * ir;
+      const na = ((i + 1) / 6) * Math.PI * 2 - Math.PI / 6;
+      const nx2 = x + Math.cos(na) * ir;
+      const ny2 = y + Math.sin(na) * ir;
+      g.beginPath();
+      g.moveTo(nx, ny);
+      g.lineTo(nx2, ny2);
+      g.strokePath();
+    }
+
+    // "20" text in center
+    this.add.text(x, y + 2, '20', {
+      fontSize: '18px', fontFamily: 'Georgia, serif', color: '#c8962a'
+    }).setOrigin(0.5, 0.5);
+
+    return g;
+  }
+
   _animateRoll(die, threshold, W) {
+    // Shake the d20 Graphics via x offset (Graphics don't support angle tween directly)
     let frame = 0;
     const ticker = this.time.addEvent({
       delay: 60,
@@ -168,18 +210,15 @@ export default class AccusationScene extends Phaser.Scene {
         frame++;
         const fake = Phaser.Math.Between(1, 20);
         this._rollLabel(W, fake, '#888866', true);
-        this.tweens.add({
-          targets: die, angle: { from: 0, to: frame % 2 === 0 ? 8 : -8 },
-          duration: 55, ease: 'Linear'
-        });
+        const shift = frame % 2 === 0 ? 6 : -6;
+        this.tweens.add({ targets: die, x: W / 2 + shift, duration: 50, ease: 'Linear',
+          onComplete: () => { die.x = W / 2; } });
       }
     });
 
-    ticker.callback = ticker.callback; // keep ref
-
     this.time.delayedCall(1350, () => {
+      die.x = W / 2;
       const result = Phaser.Math.Between(1, 20);
-      this.tweens.add({ targets: die, angle: 0, duration: 100 });
       this._rollLabel(W, result, result >= threshold ? C.success : C.danger, false);
       this._resolveRoll(result, threshold);
     });

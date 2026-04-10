@@ -2,6 +2,7 @@ import caseManager from '../systems/CaseManager.js';
 import toolSystem from '../systems/ToolSystem.js';
 import HUD from '../ui/HUD.js';
 import DialogBox from '../ui/DialogBox.js';
+import { drawLocationArt } from '../ui/LocationArt.js';
 
 const C = {
   panel:       0x0f0f0b,
@@ -47,11 +48,8 @@ export default class LocationScene extends Phaser.Scene {
     const PAN_X  = 628, PAN_W = 332, PAN_H = 460;
     const TOP    = 34;
 
-    // Location image
-    this.add.image(0, TOP, loc.image).setOrigin(0, 0).setDisplaySize(IMG_W, IMG_H);
-
-    // Dim overlay on image (atmosphere)
-    this.add.rectangle(0, TOP, IMG_W, IMG_H, 0x000000, 0.25).setOrigin(0, 0);
+    // Location art — drawn procedurally at native canvas resolution (no blurry textures)
+    drawLocationArt(this, loc.id, 0, TOP, IMG_W, IMG_H);
 
     // Right panel background
     this.add.rectangle(PAN_X, TOP, PAN_W, PAN_H, C.panel).setOrigin(0, 0);

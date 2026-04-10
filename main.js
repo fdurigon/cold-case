@@ -15,6 +15,12 @@ const config = {
   width: 960,
   height: 540,
   backgroundColor: '#0d0d0d',
+  antialias: true,
+  roundPixels: false,
+  // Render at the device pixel ratio so the canvas buffer matches physical pixels.
+  // Phaser uses this to size the WebGL/Canvas framebuffer; game-logic coordinates
+  // stay at 960×540 regardless of DPR.
+  resolution: window.devicePixelRatio || 1,
   scale: {
     mode: Phaser.Scale.FIT,
     autoCenter: Phaser.Scale.CENTER_BOTH,

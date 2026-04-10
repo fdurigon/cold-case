@@ -273,6 +273,10 @@
       "portrait": "portrait_001",
       "revealed_by_evidence": null,
       "visible_from_start": true,
+      "age": 43,
+      "gender": "Masculino",
+      "appearance": "Homem corpulento, ombros largos e mãos enormes marcadas pelo facão. Avental sempre manchado. Bigode espesso, olhos fundos com bordas avermelhadas.",
+      "behavior": "Explosivo quando confrontado. Trabalha até tarde, sozinho. Os vizinhos o evitam. Frequenta a taverna com regularidade.",
       "profile": "Açougueiro local, conhecido por horários erráticos e um temperamento difícil. Vizinhos relatam que foi visto perto do beco na noite em questão. Suas mãos de açougueiro seriam capazes de infligir aqueles ferimentos.",
       "is_solution": false,
       "dialogs": [
@@ -305,6 +309,10 @@
       "portrait": "portrait_002",
       "revealed_by_evidence": "ev_004",
       "visible_from_start": false,
+      "age": 31,
+      "gender": "Feminino",
+      "appearance": "Estatura média, cabelos negros presos com força. Olhar vivo e calculista. Mãos delicadas demais para o trabalho pesado que diz fazer.",
+      "behavior": "Charmosa quando conveniente, evasiva quando pressionada. Sabe tudo sobre o bairro, mas compartilha apenas o que lhe é útil.",
       "profile": "Barman da Taverna do Javali. As vítimas eram clientes regulares. Margarida tem um passado obscuro — fugiu de outra cidade há três anos. Conhece todos os frequentadores do bairro.",
       "is_solution": false,
       "dialogs": [
@@ -337,6 +345,10 @@
       "portrait": "portrait_003",
       "revealed_by_evidence": "ev_003",
       "visible_from_start": false,
+      "age": 52,
+      "gender": "Masculino",
+      "appearance": "Alto e magro, sempre de casaco preto e chapéu cartola. Mãos brancas de cirurgião, dedos longos e precisos. Voz suave demais para um homem de sua profissão.",
+      "behavior": "Excessivamente calmo. Faz contato visual de forma perturbadora. Não demonstra horror diante dos crimes — apenas curiosidade analítica.",
       "profile": "Médico e cirurgião respeitado. Mora sozinho em seu consultório na parte mais antiga da cidade. Especialista em anatomia — suas habilidades correspondem à precisão cirúrgica dos ferimentos descritos nos laudos.",
       "is_solution": true,
       "dialogs": [
