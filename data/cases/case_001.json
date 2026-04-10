@@ -1,0 +1,462 @@
+{
+  "id": "case_001",
+  "codename": "A Sombra de Whitechapel",
+  "real_crime_name": "Jack the Ripper",
+  "real_crime_year": "1888",
+  "difficulty": 2,
+  "locations": [
+    {
+      "id": "loc_001",
+      "name": "Beco do Açougueiro",
+      "map_x": 25,
+      "map_y": 38,
+      "image": "loc_001_bg",
+      "atmosphere": {
+        "description": "O beco fede a ferro e putrefação. Uma única lanterna a gás vacila ao fundo, projetando sombras longas sobre os paralelepípedos molhados. Água pinga em algum lugar que você não consegue ver. A névoa é espessa o suficiente para tocar. Marcas escuras mancham o chão — sangue, há tempo seco.",
+        "sound_loop": null
+      },
+      "searchable_objects": [
+        {
+          "id": "obj_001",
+          "label": "Debaixo da mesa de madeira",
+          "required_tool": "flashlight",
+          "evidence_id": "ev_001",
+          "description_no_tool": "Sob a mesa reina a escuridão. Você precisaria de uma fonte de luz para ver qualquer coisa.",
+          "description_wrong_tool": "Isso não vai iluminar nada aqui.",
+          "description_found": "Seu feixe de luz varre o chão encardido. Encostado na perna traseira da mesa, meio enrolado em pano — um lenço de linho fino. Você o ensaca com cuidado.",
+          "description_empty": "Nada além de poeira e um inseto morto."
+        },
+        {
+          "id": "obj_002",
+          "label": "Atrás dos tijolos soltos",
+          "required_tool": "magnifier",
+          "evidence_id": "ev_003",
+          "description_no_tool": "Há algo entre os tijolos — mas a luz é fraca demais para ver os detalhes.",
+          "description_wrong_tool": "Você precisa de algo para examinar os tijolos de perto.",
+          "description_found": "Atrás de um tijolo visivelmente deslocado, sua lupa revela um cartão de visita dobrado e manchado. 'Dr. C. Blackwell — Cirurgião e Médico Geral.' Amassado, mas legível.",
+          "description_empty": "Os tijolos estão simplesmente soltos pela umidade. Nada escondido."
+        },
+        {
+          "id": "obj_003",
+          "label": "Poça de sangue coagulado",
+          "required_tool": "uv_light",
+          "evidence_id": null,
+          "description_no_tool": "Uma poça escura e coagulada. O cheiro é insuportável.",
+          "description_wrong_tool": "Isso não vai revelar mais do que o horror visível a olho nu.",
+          "description_found": "A luz negra revela rastros de arrasto que o sangue visível ocultava — a vítima foi movida após a morte. Perturbador, mas não há evidência física para coletar.",
+          "description_empty": "Já examinado. Apenas sangue seco."
+        },
+        {
+          "id": "obj_004",
+          "label": "Lanterna a gás enferrujada",
+          "required_tool": null,
+          "evidence_id": null,
+          "description_no_tool": "",
+          "description_wrong_tool": "",
+          "description_found": "A lanterna está fria. Apagada há horas. Não há nada útil aqui — apenas ferro enferrujado e vidro encardido.",
+          "description_empty": "Já examinada."
+        }
+      ],
+      "max_searches_per_visit": 3
+    },
+    {
+      "id": "loc_002",
+      "name": "A Taverna do Javali",
+      "map_x": 48,
+      "map_y": 22,
+      "image": "loc_002_bg",
+      "atmosphere": {
+        "description": "A taverna ainda cheira a cerveja azeda e fumaça de cigarro, mesmo fechada. As cadeiras estão empilhadas sobre as mesas. O balcão está limpo demais — alguém se esforçou para apagar qualquer rastro. Uma única lamparina de óleo queima no corredor, tremendo como um último testemunho.",
+        "sound_loop": null
+      },
+      "searchable_objects": [
+        {
+          "id": "obj_005",
+          "label": "Tábua do assoalho afrouxada",
+          "required_tool": "flashlight",
+          "evidence_id": "ev_006",
+          "description_no_tool": "Uma tábua visivelmente deslocada. Escuro demais para ver o que há embaixo.",
+          "description_wrong_tool": "Isso não vai iluminar o espaço sob a tábua.",
+          "description_found": "Sua lanterna revela um fragmento de papel dobrado enfiado sob a tábua. Um trecho de carta — a tinta manchada de umidade, mas as palavras ainda legíveis. Alguém a escondeu aqui.",
+          "description_empty": "Apenas madeira apodrecida e poeira."
+        },
+        {
+          "id": "obj_006",
+          "label": "Quadro de avisos no corredor",
+          "required_tool": "camera",
+          "evidence_id": "ev_007",
+          "description_no_tool": "Há papéis e esboços pregados no quadro. Você deveria fotografar antes que desapareçam.",
+          "description_wrong_tool": "Você precisa registrar isso — uma câmera seria o ideal.",
+          "description_found": "Você fotografa o quadro inteiro. Entre os avisos banais, há um esboço a carvão feito por uma testemunha — um homem de casaco longo e chapéu alto, visto saindo do beco na noite do crime.",
+          "description_empty": "Já fotografado."
+        },
+        {
+          "id": "obj_007",
+          "label": "Balcão do bar",
+          "required_tool": "fingerprint_kit",
+          "evidence_id": null,
+          "description_no_tool": "O balcão foi limpo recentemente. Talvez ainda haja impressões digitais.",
+          "description_wrong_tool": "Para revelar impressões, você precisaria do kit adequado.",
+          "description_found": "Seu kit revela várias impressões sobrepostas — típico de um balcão de bar. Impossível isolar uma única pessoa. Beco sem saída.",
+          "description_empty": "Já verificado."
+        },
+        {
+          "id": "obj_008",
+          "label": "Mesa do canto escuro",
+          "required_tool": "magnifier",
+          "evidence_id": null,
+          "description_no_tool": "Uma mesa no canto mais escuro da taverna. Algo chamou sua atenção.",
+          "description_wrong_tool": "Você precisaria examinar isso de perto.",
+          "description_found": "Marcas de copo e um nome gravado na madeira com uma faca — 'E.H.' A inicial do açougueiro. Mas qualquer cliente poderia ter feito isso. Não é prova de nada.",
+          "description_empty": "Já examinada."
+        }
+      ],
+      "max_searches_per_visit": 3
+    },
+    {
+      "id": "loc_003",
+      "name": "O Cais Escarlate",
+      "map_x": 72,
+      "map_y": 62,
+      "image": "loc_003_bg",
+      "atmosphere": {
+        "description": "O cais à meia-noite parece outro mundo. O rio escuro bate com violência nos pilares. Há cheiro de sal, peixe podre e algo mais — ferrugem, ou sangue. As correntes das docas rangem. Na névoa ao longe, um barco abandonado balança. Este é o lugar do segundo crime.",
+        "sound_loop": null
+      },
+      "searchable_objects": [
+        {
+          "id": "obj_009",
+          "label": "Caixote de madeira apodrecida",
+          "required_tool": "evidence_bag",
+          "evidence_id": "ev_002",
+          "description_no_tool": "Dentro do caixote, algo escuro e úmido. Você precisaria de luvas e um saco adequado para manipular.",
+          "description_wrong_tool": "Sem proteção adequada, você não deveria tocar nisso.",
+          "description_found": "Com seu saco de evidências, você retira cuidadosamente uma luva cirúrgica ensanguentada dobrada no fundo do caixote. A precisão dos cortes descritos no relatório policial finalmente faz sentido.",
+          "description_empty": "Já coletado."
+        },
+        {
+          "id": "obj_010",
+          "label": "Paralelepípedos perto da beira",
+          "required_tool": "magnifier",
+          "evidence_id": "ev_004",
+          "description_no_tool": "Pedras escorregadias perto da beira da água. Há algo pequeno entre elas.",
+          "description_wrong_tool": "Você precisa examinar isso de perto.",
+          "description_found": "Encaixada entre dois paralelepípedos — uma caixa de fósforos com o brasão da Taverna do Javali. No verso, um nome escrito a lápis: 'M. Voss'. A barman.",
+          "description_empty": "Já examinado."
+        },
+        {
+          "id": "obj_011",
+          "label": "Correntes enferrujadas na parede",
+          "required_tool": "uv_light",
+          "evidence_id": null,
+          "description_no_tool": "Correntes velhas presas à parede de pedra. Algo na superfície chamou sua atenção.",
+          "description_wrong_tool": "Você precisaria de uma luz especial para ver traços invisíveis.",
+          "description_found": "A luz negra revela salpicos de sangue nas correntes — mais antigos do que o crime recente. Este cais tem uma história longa e violenta. Mas não há nada utilizável aqui.",
+          "description_empty": "Já examinadas."
+        },
+        {
+          "id": "obj_012",
+          "label": "Barco abandonado encostado",
+          "required_tool": "flashlight",
+          "evidence_id": null,
+          "description_no_tool": "O barco está escuro por dentro. Você não enxerga nada sem luz.",
+          "description_wrong_tool": "Sem luz, você não vai encontrar nada aqui.",
+          "description_found": "Seu feixe ilumina o interior do barco. Redes apodrecidas, uma garrafa quebrada, excrementos de pássaro. Nada útil — mas alguém esteve aqui recentemente. As tábuas do assoalho estão limpas demais.",
+          "description_empty": "Já verificado."
+        }
+      ],
+      "max_searches_per_visit": 3
+    },
+    {
+      "id": "loc_004",
+      "name": "Consultório do Dr. Blackwell",
+      "map_x": 62,
+      "map_y": 28,
+      "image": "loc_004_bg",
+      "atmosphere": {
+        "description": "O consultório do Dr. Blackwell é impecavelmente organizado. Livros médicos em fileiras perfeitas, instrumentos cirúrgicos em bandejas cobertas. Mas algo está errado na quietude deste lugar — um cheiro residual de formol que nenhuma limpeza pode apagar. Nos cantos, sombras que não deveriam existir à tarde.",
+        "sound_loop": null
+      },
+      "searchable_objects": [
+        {
+          "id": "obj_013",
+          "label": "Gaveta da escrivaninha",
+          "required_tool": "magnifier",
+          "evidence_id": "ev_005",
+          "description_no_tool": "A gaveta está fechada mas não trancada. Algo reluz no interior.",
+          "description_wrong_tool": "Você precisa examinar o conteúdo de perto.",
+          "description_found": "Sua lupa revela um bisturi cirúrgico de alta qualidade gravado com as iniciais 'C.B.' — Cornelius Blackwell. A lâmina apresenta traços de material orgânico que nenhuma limpeza removeu completamente.",
+          "description_empty": "A gaveta está vazia."
+        },
+        {
+          "id": "obj_014",
+          "label": "Estante de livros médicos",
+          "required_tool": "uv_light",
+          "evidence_id": "ev_008",
+          "description_no_tool": "Livros médicos em ordem perfeita. Algum parece mais consultado que os outros.",
+          "description_wrong_tool": "Você precisaria de luz especial para revelar anotações ocultas.",
+          "description_found": "A luz negra revela anotações a tinta invisível nas margens de um diário médico encadernado em couro. Datas, nomes — e descrições anatômicas de ferimentos que só poderiam ter sido escritas por quem os infligiu.",
+          "description_empty": "Os livros não revelam mais nada."
+        },
+        {
+          "id": "obj_015",
+          "label": "Mesa de exame médico",
+          "required_tool": "fingerprint_kit",
+          "evidence_id": null,
+          "description_no_tool": "A mesa de metal está impecável. Mas metais guardam impressões.",
+          "description_wrong_tool": "Para revelar impressões digitais, você precisa do kit específico.",
+          "description_found": "Seu kit revela impressões digitais claras na borda da mesa — mas sem um banco de dados para comparação, você não pode identificar de quem são. O laboratório policial precisaria disso.",
+          "description_empty": "Já verificada."
+        },
+        {
+          "id": "obj_016",
+          "label": "Armário de medicamentos",
+          "required_tool": "evidence_bag",
+          "evidence_id": null,
+          "description_no_tool": "O armário está entreaberto. Há frascos dentro, mas você não deveria tocar sem proteção.",
+          "description_wrong_tool": "Você precisaria de proteção adequada para manusear os frascos.",
+          "description_found": "Com seu saco de evidências como luva improvisada, você verifica os frascos. Morfina, éter, clorofórmio — todos os anestésicos de um cirurgião. Nada fora do comum para um médico, mas a quantidade é excessiva.",
+          "description_empty": "Já verificado."
+        }
+      ],
+      "max_searches_per_visit": 4
+    },
+    {
+      "id": "loc_005",
+      "name": "A Botica Hargrove",
+      "map_x": 32,
+      "map_y": 65,
+      "image": "loc_005_bg",
+      "atmosphere": {
+        "description": "A botica Hargrove é velha e empoeirada. O senhor Hargrove morreu há seis meses — o estabelecimento foi vendido, mas ninguém parece ter assumido ainda. As prateleiras guardam remédios com datas vencidas há anos. Pó e silêncio. A campainha da porta ainda tintina quando você entra.",
+        "sound_loop": null
+      },
+      "searchable_objects": [
+        {
+          "id": "obj_017",
+          "label": "Prateleira de remédios",
+          "required_tool": "magnifier",
+          "evidence_id": "ev_010",
+          "description_no_tool": "Frascos enfileirados, alguns sem rótulo. Algo parece fora do lugar.",
+          "description_wrong_tool": "Você precisa examinar os rótulos de perto.",
+          "description_found": "Sua lupa revela um conjunto de frascos de morfina com os rótulos originais raspados e substituídos — a letra é de Margarida Voss. Ela fornecia medicamentos ilegalmente? Ou estava cobrindo os rastros de outra pessoa?",
+          "description_empty": "Já examinados."
+        },
+        {
+          "id": "obj_018",
+          "label": "Balcão do atendente",
+          "required_tool": "fingerprint_kit",
+          "evidence_id": null,
+          "description_no_tool": "O balcão de madeira polida. Alguém esteve aqui recentemente — a poeira foi perturbada.",
+          "description_wrong_tool": "Para revelar impressões, você precisaria do kit adequado.",
+          "description_found": "Seu kit revela impressões recentes no balcão. Mas sem comparação, são apenas marcas anônimas. A poeira perturbada confirma que alguém esteve aqui nos últimos dias.",
+          "description_empty": "Já verificado."
+        },
+        {
+          "id": "obj_019",
+          "label": "Livro de receitas médicas",
+          "required_tool": "camera",
+          "evidence_id": null,
+          "description_no_tool": "Um livro de registro de receitas médicas. Você deveria documentar isso.",
+          "description_wrong_tool": "Você precisaria de uma câmera para registrar as páginas.",
+          "description_found": "Você fotografa as páginas recentes. O nome 'Blackwell' aparece repetidamente — ele comprava quantidades incomuns de anestésicos aqui. Informação relevante, mas não é prova direta dos crimes.",
+          "description_empty": "Já fotografado."
+        }
+      ],
+      "max_searches_per_visit": 2
+    }
+  ],
+  "suspects": [
+    {
+      "id": "suspect_001",
+      "name": "Edmund Harrow",
+      "portrait": "portrait_001",
+      "revealed_by_evidence": null,
+      "visible_from_start": true,
+      "profile": "Açougueiro local, conhecido por horários erráticos e um temperamento difícil. Vizinhos relatam que foi visto perto do beco na noite em questão. Suas mãos de açougueiro seriam capazes de infligir aqueles ferimentos.",
+      "is_solution": false,
+      "dialogs": [
+        {
+          "id": "dialog_001",
+          "label": "Onde estava na noite do crime",
+          "requires_evidence": null,
+          "text": "Estava fechando o açougue por volta das dez. Não ouvi nada. A névoa era espessa — não se via além das próprias mãos. Pergunte à Martha, ela me viu saindo.",
+          "reveals_evidence": null
+        },
+        {
+          "id": "dialog_002",
+          "label": "Confrontar com o lenço monogramado",
+          "requires_evidence": "ev_001",
+          "text": "Esse lenço? Eu o perdi há semanas! Alguém deve ter o plantado ali. Pergunte à Martha no Javali — ela me viu emprestar a um estranho de casaco longo. Um homem educado demais para esse bairro.",
+          "reveals_evidence": "ev_009"
+        },
+        {
+          "id": "dialog_003",
+          "label": "Perguntar sobre o Dr. Blackwell",
+          "requires_evidence": "ev_003",
+          "text": "Blackwell? Um homem estranho. Vive sozinho naquele consultório. Certa vez o vi carregando uma bolsa médica ensanguentada às três da manhã. Disse que vinha de um parto difícil. Às três da manhã.",
+          "reveals_evidence": null
+        }
+      ]
+    },
+    {
+      "id": "suspect_002",
+      "name": "Margarida Voss",
+      "portrait": "portrait_002",
+      "revealed_by_evidence": "ev_004",
+      "visible_from_start": false,
+      "profile": "Barman da Taverna do Javali. As vítimas eram clientes regulares. Margarida tem um passado obscuro — fugiu de outra cidade há três anos. Conhece todos os frequentadores do bairro.",
+      "is_solution": false,
+      "dialogs": [
+        {
+          "id": "dialog_004",
+          "label": "Sobre as vítimas na taverna",
+          "requires_evidence": null,
+          "text": "Vinham aqui toda semana. Mulheres trabalhadoras, sabe? A última noite que as vi, estavam conversando com um homem de casaco preto e chapéu alto. Educado demais para esse bairro. Mãos cuidadas. Não era daqui.",
+          "reveals_evidence": null
+        },
+        {
+          "id": "dialog_005",
+          "label": "Confrontar com a caixa de fósforos",
+          "requires_evidence": "ev_004",
+          "text": "Essa caixa? Dou para todo cliente que pede fogo. Não significa nada. Mas... tudo bem. Eu conheço o médico. Ele vinha aqui às vezes. Sempre olhava para as mulheres de um jeito que me deixava mal.",
+          "reveals_evidence": null
+        },
+        {
+          "id": "dialog_006",
+          "label": "Confrontar com os frascos de morfina",
+          "requires_evidence": "ev_010",
+          "text": "Eu precisava do dinheiro! Mas eu não sabia para o que era usado! O médico me pagava bem para não fazer perguntas. Se eu soubesse... Deus me perdoe, se eu soubesse.",
+          "reveals_evidence": null
+        }
+      ]
+    },
+    {
+      "id": "suspect_003",
+      "name": "Dr. Cornelius Blackwell",
+      "portrait": "portrait_003",
+      "revealed_by_evidence": "ev_003",
+      "visible_from_start": false,
+      "profile": "Médico e cirurgião respeitado. Mora sozinho em seu consultório na parte mais antiga da cidade. Especialista em anatomia — suas habilidades correspondem à precisão cirúrgica dos ferimentos descritos nos laudos.",
+      "is_solution": true,
+      "dialogs": [
+        {
+          "id": "dialog_007",
+          "label": "Onde estava nas noites dos crimes",
+          "requires_evidence": null,
+          "text": "Estava em casa, estudando. Sou médico, senhor detetive — não um criminoso. Minhas pesquisas me mantêm acordado até tarde, é verdade, mas isso não é crime. Posso provar minha inocência.",
+          "reveals_evidence": null
+        },
+        {
+          "id": "dialog_008",
+          "label": "Confrontar com o cartão de visita",
+          "requires_evidence": "ev_003",
+          "text": "Distribuo cartões por toda a cidade. O fato de um ter caído naquele beco não prova absolutamente nada. Qualquer um poderia tê-lo levado para lá. Isso é ridículo.",
+          "reveals_evidence": null
+        },
+        {
+          "id": "dialog_009",
+          "label": "Confrontar com o bisturi",
+          "requires_evidence": "ev_005",
+          "text": "Eu... perdi esse bisturi há meses. Alguém entrou em meu consultório. Sou vítima de um roubo! Você deveria estar investigando isso, não me importunando com acusações infundadas!",
+          "reveals_evidence": null
+        },
+        {
+          "id": "dialog_010",
+          "label": "Confrontar com o diário médico",
+          "requires_evidence": "ev_008",
+          "text": "Você não tem o direito — essas são anotações científicas particulares! Estudos de anatomia! Não há crime algum em ser curioso sobre o corpo humano! Eu exijo a presença de meu advogado!",
+          "reveals_evidence": null
+        }
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "id": "ev_001",
+      "name": "Lenço Monogramado",
+      "description": "Um lenço de linho fino, inicialado E.H., manchado com o que parece ser sangue seco em um canto.",
+      "image": "evidence_default",
+      "reveals_suspect": "suspect_001",
+      "weight": 2
+    },
+    {
+      "id": "ev_002",
+      "name": "Luva Cirúrgica Ensanguentada",
+      "description": "Uma luva cirúrgica de borracha com sangue — dobrada com cuidado, como se quem a descartou não quisesse que fosse encontrada.",
+      "image": "evidence_default",
+      "reveals_suspect": null,
+      "weight": 3
+    },
+    {
+      "id": "ev_003",
+      "name": "Cartão de Visita do Dr. Blackwell",
+      "description": "'Dr. C. Blackwell — Cirurgião e Médico Geral.' Encontrado no local do primeiro crime. Amassado, mas inconfundível.",
+      "image": "evidence_default",
+      "reveals_suspect": "suspect_003",
+      "weight": 3
+    },
+    {
+      "id": "ev_004",
+      "name": "Caixa de Fósforos da Taverna",
+      "description": "Caixa de fósforos com o brasão da Taverna do Javali. No verso, em lápis: 'M. Voss'. Encontrada no segundo local do crime.",
+      "image": "evidence_default",
+      "reveals_suspect": "suspect_002",
+      "weight": 1
+    },
+    {
+      "id": "ev_005",
+      "name": "Bisturi Monogramado",
+      "description": "Bisturi cirúrgico de alta qualidade gravado com 'C.B.' Traços de material orgânico que nenhuma limpeza removeu completamente.",
+      "image": "evidence_default",
+      "reveals_suspect": null,
+      "weight": 4
+    },
+    {
+      "id": "ev_006",
+      "name": "Fragmento de Carta",
+      "description": "Trecho de carta escondido sob uma tábua do assoalho. A tinta está manchada, mas as palavras revelam um encontro marcado para a noite do crime — e um nome de remetente parcialmente legível.",
+      "image": "evidence_default",
+      "reveals_suspect": null,
+      "weight": 2
+    },
+    {
+      "id": "ev_007",
+      "name": "Esboço de Testemunha",
+      "description": "Retrato a carvão feito por uma testemunha: homem de casaco longo e chapéu alto. A postura e o vestuário são os de um profissional liberal.",
+      "image": "evidence_default",
+      "reveals_suspect": null,
+      "weight": 2
+    },
+    {
+      "id": "ev_008",
+      "name": "Diário Médico Cifrado",
+      "description": "Diário com anotações em tinta invisível reveladas por luz negra. Datas que coincidem com os crimes, descrições anatômicas perturbadoras e nomes das vítimas escritos antes de suas mortes.",
+      "image": "evidence_default",
+      "reveals_suspect": null,
+      "weight": 4
+    },
+    {
+      "id": "ev_009",
+      "name": "Testemunho de Martha",
+      "description": "Relato obtido por interrogatório: Martha confirma ter visto Edmund Harrow emprestar seu lenço a um homem de casaco longo na noite do crime. O homem corresponde ao esboço da testemunha.",
+      "image": "evidence_default",
+      "reveals_suspect": null,
+      "weight": 1
+    },
+    {
+      "id": "ev_010",
+      "name": "Frascos de Morfina Adulterados",
+      "description": "Frascos com rótulos reescritos na letra de Margarida Voss. Ela fornecia anestésicos ilegalmente. Para quem? E com qual propósito?",
+      "image": "evidence_default",
+      "reveals_suspect": null,
+      "weight": 1
+    }
+  ],
+  "solution": {
+    "suspect_id": "suspect_003",
+    "required_evidence": ["ev_005", "ev_008"],
+    "reputation_base_reward": 100,
+    "reveal_text": "Este caso foi inspirado nos assassinatos reais de Jack, o Estripador — uma série de homicídios não solucionados cometidos em Whitechapel, Londres, entre agosto e novembro de 1888. Pelo menos cinco mulheres foram mortas com uma precisão cirúrgica que sugeriu ao meio médico da época que o culpado poderia ter conhecimento anatômico formal. O verdadeiro responsável nunca foi identificado com certeza, tornando Jack, o Estripador, um dos maiores mistérios criminais da história."
+  }
+}
