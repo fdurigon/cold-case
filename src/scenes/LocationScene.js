@@ -4,6 +4,15 @@ import HUD from '../ui/HUD.js';
 import DialogBox from '../ui/DialogBox.js';
 import { drawLocationArt } from '../ui/LocationArt.js';
 
+// Maps location id → preloaded texture key
+const LOCATION_TEXTURE = {
+  loc_001: 'loc_001',
+  loc_002: 'loc_002',
+  loc_003: 'loc_003',
+  loc_004: 'loc_004',
+  loc_005: 'loc_005',
+};
+
 const C = {
   panel:       0x0f0f0b,
   panelBorder: 0x2a2510,
@@ -48,8 +57,25 @@ export default class LocationScene extends Phaser.Scene {
     const PAN_X  = 628, PAN_W = 332, PAN_H = 460;
     const TOP    = 34;
 
-    // Location art — drawn procedurally at native canvas resolution (no blurry textures)
-    drawLocationArt(this, loc.id, 0, TOP, IMG_W, IMG_H);
+    // Location art — use real image if available, fall back to procedural
+    const texKey = LOCATION_TEXTURE[loc.id];
+    if (texKey && this.textures.exists(texKey)) {
+      const img = this.add.image(0, TOP, texKey).setOrigin(0, 0);
+      // Scale to fill the panel (cover), cropping centre
+      const tex   = this.textures.get(texKey).getSourceImage();
+      const scale = Math.max(IMG_W / tex.width, IMG_H / tex.height);
+      img.setScale(scale);
+      img.setPosition(
+        (IMG_W - tex.width  * scale) / 2,
+        TOP + (IMG_H - tex.height * scale) / 2
+      );
+      // Clip to the panel area
+      const mask = this.make.graphics({ x: 0, y: 0, add: false });
+      mask.fillRect(0, TOP, IMG_W, IMG_H);
+      img.setMask(mask.createGeometryMask());
+    } else {
+      drawLocationArt(this, loc.id, 0, TOP, IMG_W, IMG_H);
+    }
 
     // Right panel background
     this.add.rectangle(PAN_X, TOP, PAN_W, PAN_H, C.panel).setOrigin(0, 0);

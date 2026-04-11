@@ -104,9 +104,18 @@ export default class SuspectsScene extends Phaser.Scene {
 
     // ── Portrait ────────────────────────────────────────────────
     const portH = 148;
-    // Portrait background
     this.add.rectangle(x, y, CARD_W, portH, 0x0c0c0a).setOrigin(0, 0);
-    drawPortrait(this, sus.id, cx, y + portH / 2, CARD_W, portH);
+    if (this.textures.exists(sus.id)) {
+      const img  = this.add.image(cx, y + portH / 2, sus.id).setOrigin(0.5, 0.5);
+      const tex  = this.textures.get(sus.id).getSourceImage();
+      const scale = Math.max(CARD_W / tex.width, portH / tex.height);
+      img.setScale(scale);
+      const mask = this.make.graphics({ x: 0, y: 0, add: false });
+      mask.fillRect(x, y, CARD_W, portH);
+      img.setMask(mask.createGeometryMask());
+    } else {
+      drawPortrait(this, sus.id, cx, y + portH / 2, CARD_W, portH);
+    }
     // Portrait bottom divider
     this.add.rectangle(x, y + portH, CARD_W, 1, C.border).setOrigin(0, 0);
 

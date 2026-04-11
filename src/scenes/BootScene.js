@@ -1,9 +1,7 @@
 import caseManager from '../systems/CaseManager.js';
 import saveManager from '../systems/SaveManager.js';
 
-// BootScene: loads game data and transitions to MenuScene.
-// All visual assets are drawn procedurally in their respective scenes
-// (Phaser.Graphics render at native canvas resolution — no blurry pre-baked textures).
+// BootScene: loads game data and all visual assets, then transitions to MenuScene.
 
 export default class BootScene extends Phaser.Scene {
   constructor() {
@@ -12,6 +10,17 @@ export default class BootScene extends Phaser.Scene {
 
   preload() {
     this.load.json('case_001', 'data/cases/case_001.json');
+
+    // Location backgrounds
+    this.load.image('loc_001', 'assets/locations/loc_001.png');
+    this.load.image('loc_002', 'assets/locations/loc_002.png');
+    this.load.image('loc_003', 'assets/locations/loc_003.png');
+    this.load.image('loc_004', 'assets/locations/loc_004.png');
+    this.load.image('loc_005', 'assets/locations/loc_005.png');
+
+    // Suspect portraits (loaded as available; fallback to procedural if missing)
+    this.load.image('suspect_001', 'assets/portraits/suspect_001.png');
+    // suspect_002 and suspect_003 will be added when images are ready
 
     const W = 960, H = 540;
     const barW = 280, barH = 3;

@@ -37,10 +37,21 @@ export default class InterrogationScene extends Phaser.Scene {
     this.add.rectangle(0, 34, PORT_W, PORT_H, C.panel).setOrigin(0, 0);
     this.add.rectangle(PORT_W, 34, 1, PORT_H, C.border).setOrigin(0, 0);
 
-    // Portrait drawn procedurally — no pre-baked texture
+    // Portrait — use real image if available, fall back to procedural
     const portH = Math.round(PORT_H * 0.5);
     const portY = 34 + Math.round(PORT_H * 0.13);
-    drawPortrait(this, sus.id, PORT_W / 2, portY + portH / 2, PORT_W - 20, portH);
+    const portW = PORT_W - 20;
+    if (this.textures.exists(sus.id)) {
+      const img = this.add.image(PORT_W / 2, portY + portH / 2, sus.id).setOrigin(0.5, 0.5);
+      const tex  = this.textures.get(sus.id).getSourceImage();
+      const scale = Math.max(portW / tex.width, portH / tex.height);
+      img.setScale(scale);
+      const mask = this.make.graphics({ x: 0, y: 0, add: false });
+      mask.fillRect(PORT_W / 2 - portW / 2, portY, portW, portH);
+      img.setMask(mask.createGeometryMask());
+    } else {
+      drawPortrait(this, sus.id, PORT_W / 2, portY + portH / 2, portW, portH);
+    }
 
     this.add.text(PORT_W / 2, 34 + PORT_H * 0.68, sus.name, {
       fontSize: '16px', fontFamily: 'Georgia, serif', color: C.text
