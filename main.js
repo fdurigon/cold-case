@@ -10,6 +10,20 @@ import InterrogationScene from './src/scenes/InterrogationScene.js';
 import AccusationScene from './src/scenes/AccusationScene.js';
 import ResolutionScene from './src/scenes/ResolutionScene.js';
 
+// ── HiDPI / Retina fix ────────────────────────────────────────────────────────
+// Phaser 3.60 removed the top-level `resolution` config key for Text objects.
+// Patching the factory here ensures every this.add.text() call in every scene
+// automatically renders at the device pixel ratio, eliminating canvas blur on
+// Retina / HiDPI displays — without touching any scene file.
+const _dpr = window.devicePixelRatio || 1;
+const _origText = Phaser.GameObjects.GameObjectFactory.prototype.text;
+Phaser.GameObjects.GameObjectFactory.prototype.text = function (x, y, content, style) {
+  const s = Object.assign({}, style);
+  if (s.resolution === undefined) s.resolution = _dpr;
+  return _origText.call(this, x, y, content, s);
+};
+// ─────────────────────────────────────────────────────────────────────────────
+
 const config = {
   type: Phaser.AUTO,
   width: 960,
@@ -17,10 +31,6 @@ const config = {
   backgroundColor: '#0d0d0d',
   antialias: true,
   roundPixels: false,
-  // Render at the device pixel ratio so the canvas buffer matches physical pixels.
-  // Phaser uses this to size the WebGL/Canvas framebuffer; game-logic coordinates
-  // stay at 960×540 regardless of DPR.
-  resolution: window.devicePixelRatio || 1,
   scale: {
     mode: Phaser.Scale.FIT,
     autoCenter: Phaser.Scale.CENTER_BOTH,
