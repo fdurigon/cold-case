@@ -36,8 +36,20 @@ export default class AccusationScene extends Phaser.Scene {
 
     this.add.rectangle(W / 2, 62, 500, 1, C.border).setOrigin(0.5, 0);
 
-    // Suspect portrait — drawn procedurally
-    drawPortrait(this, sus.id, W / 2, 160, 120, 140);
+    // Suspect portrait — real image if available, fallback to procedural
+    const portW = 120, portH = 140;
+    const portX = W / 2 - portW / 2, portY = 160 - portH / 2;
+    if (this.textures.exists(sus.id)) {
+      const img  = this.add.image(W / 2, portY, sus.id).setOrigin(0.5, 0);
+      const tex  = this.textures.get(sus.id).getSourceImage();
+      const scale = Math.max(portW / tex.width, portH / tex.height);
+      img.setScale(scale);
+      const mask = this.make.graphics({ x: 0, y: 0, add: false });
+      mask.fillRect(portX, portY, portW, portH);
+      img.setMask(mask.createGeometryMask());
+    } else {
+      drawPortrait(this, sus.id, W / 2, 160, portW, portH);
+    }
 
     this.add.text(W / 2, 232, sus.name, {
       fontSize: '18px', fontFamily: 'Georgia, serif', color: C.text
