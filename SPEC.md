@@ -33,8 +33,11 @@ A browser-based investigation game in which the player assumes the role of a det
 | Auto-center | `Phaser.Scale.CENTER_BOTH` |
 | Min width | 390 px (mobile portrait not supported — landscape only) |
 | Max width | 1440 px |
+| HiDPI fix | `render.resolution = fitScale × devicePixelRatio` |
 
-All UI positioning uses the base resolution coordinate system (0–960 × 0–540). Phaser's scale manager handles the physical-to-logical mapping. Assets are authored at 1× base resolution.
+All UI positioning uses the base resolution coordinate system (0–960 × 0–540). Phaser's scale manager handles the physical-to-logical mapping.
+
+**HiDPI / Retina fix:** `render.resolution` is set to `fitScale × window.devicePixelRatio` at startup so the canvas buffer matches the physical pixel count exactly, eliminating blur on Retina displays. This is calculated once in `main.js` before the Phaser game is created.
 
 ---
 
@@ -45,12 +48,12 @@ cold-case/
 ├── index.html
 ├── main.js                  # Phaser game config + scene registry
 ├── assets/
-│   ├── ui/                  # HUD elements, buttons, icons
-│   ├── cases/
-│   │   └── case_001/
-│   │       ├── locations/   # Pixel art images per location
-│   │       └── suspects/    # Suspect portrait images
-│   └── tools/               # Tool icons
+│   ├── ui/                  # Cover image, HUD elements
+│   │   └── cover.png
+│   ├── portraits/           # Suspect portrait images (one per suspect_id)
+│   │   └── suspect_001.png  # e.g. Edmund Harrow — AI-generated photo portrait
+│   ├── locations/           # Location background images (loc_001.png … loc_005.png)
+│   └── tools/               # Tool icons (not yet implemented)
 ├── data/
 │   └── cases/
 │       └── case_001.json    # Full case definition
@@ -75,7 +78,8 @@ cold-case/
 │   └── ui/
 │       ├── DialogBox.js     # Atmospheric text renderer
 │       ├── HUD.js           # Persistent top/bottom bar
-│       └── Tooltip.js
+│       ├── PortraitArt.js   # Procedural portrait fallback (Graphics-based)
+│       └── LocationArt.js   # Procedural location fallback
 └── SPEC.md                  # This file
 ```
 
@@ -387,8 +391,8 @@ Triggered after a successful conviction (either by evidence or persuasion roll).
   - UI chrome: near-black with amber/gold accents
 
 - **Typography:** Serif or typewriter font for narrative text. Sans for UI.
-- **Location images:** Pixel art, ~640x360px, high detail, oppressive lighting. Generated externally and dropped into `assets/cases/case_XXX/locations/`.
-- **Suspect portraits:** Pixel art, ~128x128px, consistent style across all suspects in a case. Enough detail to distinguish features and expression.
+- **Location images:** AI-generated atmospheric images stored in `assets/locations/` as `loc_001.png` … `loc_005.png`. Where no image exists, `LocationArt.js` generates a procedural fallback. Images fill the left panel of `LocationScene` (≈65% of screen width).
+- **Suspect portraits:** AI-generated photorealistic images (e.g. 1024×1536px). Stored in `assets/portraits/` as `suspect_001.png`, `suspect_002.png`, etc. Loaded by `BootScene` and referenced by suspect ID. Where no image exists, `PortraitArt.js` generates a procedural Graphics-based portrait as fallback. Portraits are displayed **top-anchored** (head prioritized) with a geometry mask clipping the bottom — `setOrigin(0.5, 0)` positioned at the top of the portrait area.
 - **Tool icons:** Pixel art, ~48x48px, clean silhouette style, readable at small sizes.
 - **Sound (optional v1.1):** Ambient loop per location. No music during investigation — silence amplifies tension.
 - **Transitions:** Slow fade to black between scenes. No snappy cuts.
