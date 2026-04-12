@@ -42,7 +42,7 @@ export default class InterrogationScene extends Phaser.Scene {
     const portY = 34 + Math.round(PORT_H * 0.13);
     const portW = PORT_W - 20;
     if (this.textures.exists(sus.id)) {
-      const img = this.add.image(PORT_W / 2, portY + portH / 2, sus.id).setOrigin(0.5, 0.5);
+      const img = this.add.image(PORT_W / 2, portY, sus.id).setOrigin(0.5, 0);
       const tex  = this.textures.get(sus.id).getSourceImage();
       const scale = Math.max(portW / tex.width, portH / tex.height);
       img.setScale(scale);

@@ -106,7 +106,7 @@ export default class SuspectsScene extends Phaser.Scene {
     const portH = 148;
     this.add.rectangle(x, y, CARD_W, portH, 0x0c0c0a).setOrigin(0, 0);
     if (this.textures.exists(sus.id)) {
-      const img  = this.add.image(cx, y + portH / 2, sus.id).setOrigin(0.5, 0.5);
+      const img  = this.add.image(cx, y, sus.id).setOrigin(0.5, 0);
       const tex  = this.textures.get(sus.id).getSourceImage();
       const scale = Math.max(CARD_W / tex.width, portH / tex.height);
       img.setScale(scale);
