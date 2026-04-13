@@ -388,7 +388,7 @@
       "id": "ev_001",
       "name": "Lenço Monogramado",
       "description": "Um lenço de linho fino, inicialado E.H., manchado com o que parece ser sangue seco em um canto.",
-      "image": "evidence_default",
+      "image": "ev_001",
       "reveals_suspect": "suspect_001",
       "weight": 2
     },
@@ -396,7 +396,7 @@
       "id": "ev_002",
       "name": "Luva Cirúrgica Ensanguentada",
       "description": "Uma luva cirúrgica de borracha com sangue — dobrada com cuidado, como se quem a descartou não quisesse que fosse encontrada.",
-      "image": "evidence_default",
+      "image": "ev_002",
       "reveals_suspect": null,
       "weight": 3
     },
@@ -404,7 +404,7 @@
       "id": "ev_003",
       "name": "Cartão de Visita do Dr. Blackwell",
       "description": "'Dr. C. Blackwell — Cirurgião e Médico Geral.' Encontrado no local do primeiro crime. Amassado, mas inconfundível.",
-      "image": "evidence_default",
+      "image": "ev_003",
       "reveals_suspect": "suspect_003",
       "weight": 3
     },
@@ -412,7 +412,7 @@
       "id": "ev_004",
       "name": "Caixa de Fósforos da Taverna",
       "description": "Caixa de fósforos com o brasão da Taverna do Javali. No verso, em lápis: 'M. Voss'. Encontrada no segundo local do crime.",
-      "image": "evidence_default",
+      "image": "ev_004",
       "reveals_suspect": "suspect_002",
       "weight": 1
     },
@@ -420,7 +420,7 @@
       "id": "ev_005",
       "name": "Bisturi Monogramado",
       "description": "Bisturi cirúrgico de alta qualidade gravado com 'C.B.' Traços de material orgânico que nenhuma limpeza removeu completamente.",
-      "image": "evidence_default",
+      "image": "ev_005",
       "reveals_suspect": null,
       "weight": 4
     },
@@ -467,7 +467,10 @@
   ],
   "solution": {
     "suspect_id": "suspect_003",
-    "required_evidence": ["ev_005", "ev_008"],
+    "required_evidence": [
+      "ev_005",
+      "ev_008"
+    ],
     "reputation_base_reward": 100,
     "reveal_text": "Este caso foi inspirado nos assassinatos reais de Jack, o Estripador — uma série de homicídios não solucionados cometidos em Whitechapel, Londres, entre agosto e novembro de 1888. Pelo menos cinco mulheres foram mortas com uma precisão cirúrgica que sugeriu ao meio médico da época que o culpado poderia ter conhecimento anatômico formal. O verdadeiro responsável nunca foi identificado com certeza, tornando Jack, o Estripador, um dos maiores mistérios criminais da história."
   }

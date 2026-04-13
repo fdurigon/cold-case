@@ -24,6 +24,13 @@ export default class BootScene extends Phaser.Scene {
     this.load.image('suspect_002', 'assets/portraits/suspect_002.png');
     this.load.image('suspect_003', 'assets/portraits/suspect_003.png');
 
+    // Evidence icons (only the ones that exist so far; others use placeholder)
+    this.load.image('ev_001', 'assets/evidence/ev_001.png');
+    this.load.image('ev_002', 'assets/evidence/ev_002.png');
+    this.load.image('ev_003', 'assets/evidence/ev_003.png');
+    this.load.image('ev_004', 'assets/evidence/ev_004.png');
+    this.load.image('ev_005', 'assets/evidence/ev_005.png');
+
     const W = 960, H = 540;
     const barW = 280, barH = 3;
     const barX = (W - barW) / 2, barY = H / 2 + 44;
