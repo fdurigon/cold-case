@@ -18,8 +18,12 @@ export default class MapScene extends Phaser.Scene {
     const def   = caseManager.definition;
     const state = caseManager.state;
 
-    // Map background (generated in BootScene)
-    this.add.image(0, 34, 'map_bg').setOrigin(0, 0);
+    // Map background — use real image when available, otherwise plain backdrop
+    if (this.textures.exists('map_bg')) {
+      this.add.image(0, 34, 'map_bg').setOrigin(0, 0);
+    } else {
+      this.add.rectangle(0, 34, W, H - 34, 0x0d0d0b).setOrigin(0, 0);
+    }
 
     // Title bar
     createText(this, W / 2, 34 + 20, def.codename.toUpperCase(), {

@@ -91,9 +91,20 @@ export default class EvidenceBoardScene extends Phaser.Scene {
     this.add.rectangle(cx, cy, W, H)
       .setOrigin(0.5, 0.5).setFillStyle(0, 0).setStrokeStyle(1, C.border);
 
-    // Evidence image (small icon)
-    this.add.image(cx - W / 2 + 26, cy - H / 2 + 26, ev.image)
-      .setDisplaySize(36, 36).setOrigin(0.5, 0.5);
+    // Evidence image — use real texture when available, otherwise draw a
+    // generic icon placeholder so the layout doesn't break.
+    const iconX = cx - W / 2 + 26, iconY = cy - H / 2 + 26;
+    if (this.textures.exists(ev.image)) {
+      this.add.image(iconX, iconY, ev.image).setDisplaySize(36, 36).setOrigin(0.5, 0.5);
+    } else {
+      // Placeholder: small amber square with a "✦" glyph
+      this.add.rectangle(iconX, iconY, 36, 36, 0x1e1a0a).setOrigin(0.5, 0.5);
+      this.add.rectangle(iconX, iconY, 36, 36)
+        .setOrigin(0.5, 0.5).setFillStyle(0, 0).setStrokeStyle(1, C.border);
+      this.add.text(iconX, iconY, '✦', {
+        fontSize: '16px', color: '#c8962a', fontFamily: 'Georgia, serif'
+      }).setOrigin(0.5, 0.5);
+    }
 
     // Name
     createText(this, cx - W / 2 + 52, cy - H / 2 + 16, ev.name, {
