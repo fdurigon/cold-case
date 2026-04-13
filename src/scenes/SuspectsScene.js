@@ -1,6 +1,7 @@
 import caseManager from '../systems/CaseManager.js';
 import HUD from '../ui/HUD.js';
 import { drawPortrait } from '../ui/PortraitArt.js';
+import createText from '../ui/DOMText.js';
 
 const C = {
   bg:        0x0d0d0b,
@@ -35,7 +36,7 @@ export default class SuspectsScene extends Phaser.Scene {
     const W = 960, H = 540;
     this.add.rectangle(0, 0, W, H, C.bg).setOrigin(0, 0);
 
-    this.add.text(W / 2, 26, 'SUSPEITOS', {
+    createText(this, W / 2, 26, 'SUSPEITOS', {
       fontSize: '15px', fontFamily: 'Georgia, serif', color: C.accent, letterSpacing: 5
     }).setOrigin(0.5, 0.5);
 
@@ -44,7 +45,7 @@ export default class SuspectsScene extends Phaser.Scene {
     const suspects = caseManager.getRevealedSuspects();
 
     if (suspects.length === 0) {
-      this.add.text(W / 2, H / 2,
+      createText(this, W / 2, H / 2,
         'Nenhum suspeito identificado ainda.\nColete mais evidências para revelar pistas.', {
           fontSize: '14px', fontFamily: 'Georgia, serif', color: C.dim,
           align: 'center', lineSpacing: 6
@@ -54,7 +55,7 @@ export default class SuspectsScene extends Phaser.Scene {
     }
 
     if (!caseManager.canAccuse() && suspects.length > 0) {
-      this.add.text(W / 2, H - 14,
+      createText(this, W / 2, H - 14,
         'Encontre uma nova evidência antes de fazer outra acusação.', {
           fontSize: '10px', fontFamily: 'Arial, sans-serif', color: C.dim
         }).setOrigin(0.5, 1);
@@ -121,14 +122,14 @@ export default class SuspectsScene extends Phaser.Scene {
 
     // ── Name + meta ──────────────────────────────────────────────
     const nameY = y + portH + 14;
-    this.add.text(cx, nameY, sus.name, {
+    createText(this, cx, nameY, sus.name, {
       fontSize: '14px', fontFamily: 'Georgia, serif', color: C.textBold
     }).setOrigin(0.5, 0.5);
 
     const meta = [sus.age ? `${sus.age} anos` : '', sus.gender || '']
       .filter(Boolean).join('  ·  ');
     if (meta) {
-      this.add.text(cx, nameY + 18, meta, {
+      createText(this, cx, nameY + 18, meta, {
         fontSize: '10px', fontFamily: 'Arial, sans-serif', color: C.dimMid
       }).setOrigin(0.5, 0.5);
     }
@@ -142,11 +143,13 @@ export default class SuspectsScene extends Phaser.Scene {
     if (sus.appearance) {
       this._label(x + 10, cursorY, 'APARÊNCIA');
       cursorY += 14;
-      const apText = this.add.text(x + 10, cursorY, sus.appearance, {
+      const apText = createText(this, x + 10, cursorY, sus.appearance, {
         fontSize: '10px', fontFamily: 'Arial, sans-serif', color: C.dimMid,
         wordWrap: { width: CARD_W - 20 }, lineSpacing: 2
       }).setOrigin(0, 0);
-      cursorY += apText.height + 8;
+      // Estimate height from the DOM element
+      const apHeight = apText.node ? apText.node.offsetHeight : 30;
+      cursorY += apHeight + 8;
     }
 
     // ── Behavior ─────────────────────────────────────────────────
@@ -155,7 +158,7 @@ export default class SuspectsScene extends Phaser.Scene {
       cursorY += 8;
       this._label(x + 10, cursorY, 'COMPORTAMENTO');
       cursorY += 14;
-      this.add.text(x + 10, cursorY, sus.behavior, {
+      createText(this, x + 10, cursorY, sus.behavior, {
         fontSize: '10px', fontFamily: 'Arial, sans-serif',
         color: C.dimMid, fontStyle: 'italic',
         wordWrap: { width: CARD_W - 20 }, lineSpacing: 2
@@ -189,14 +192,14 @@ export default class SuspectsScene extends Phaser.Scene {
   }
 
   _label(x, y, text) {
-    this.add.text(x, y, text, {
+    createText(this, x, y, text, {
       fontSize: '8px', fontFamily: 'Arial, sans-serif',
       color: '#3a3828', letterSpacing: 2
     }).setOrigin(0, 0);
   }
 
   _actionBtn(x, y, label, color, cb) {
-    const btn = this.add.text(x, y, label, {
+    const btn = createText(this, x, y, label, {
       fontSize: '11px', fontFamily: 'Arial, sans-serif', color
     }).setOrigin(0.5, 0.5).setInteractive({ useHandCursor: true });
     btn.on('pointerover', () => btn.setColor('#e8d5a3'));

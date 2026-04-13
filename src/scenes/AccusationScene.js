@@ -2,6 +2,7 @@ import caseManager from '../systems/CaseManager.js';
 import reputationSystem from '../systems/ReputationSystem.js';
 import saveManager from '../systems/SaveManager.js';
 import { drawPortrait } from '../ui/PortraitArt.js';
+import createText from '../ui/DOMText.js';
 
 const C = {
   bg:      0x0d0d0b,
@@ -30,7 +31,7 @@ export default class AccusationScene extends Phaser.Scene {
     this.add.rectangle(0, 0, W, H, C.bg).setOrigin(0, 0);
 
     // Title
-    this.add.text(W / 2, 44, 'ACUSAÇÃO FORMAL', {
+    createText(this, W / 2, 44, 'ACUSAÇÃO FORMAL', {
       fontSize: '20px', fontFamily: 'Georgia, serif', color: C.danger, letterSpacing: 4
     }).setOrigin(0.5, 0.5);
 
@@ -51,19 +52,19 @@ export default class AccusationScene extends Phaser.Scene {
       drawPortrait(this, sus.id, W / 2, 160, portW, portH);
     }
 
-    this.add.text(W / 2, 232, sus.name, {
+    createText(this, W / 2, 232, sus.name, {
       fontSize: '18px', fontFamily: 'Georgia, serif', color: C.text
     }).setOrigin(0.5, 0.5);
 
     // Warning
-    this.add.text(W / 2, 268, 'Tem certeza? Uma acusação errada prejudicará sua reputação.', {
+    createText(this, W / 2, 268, 'Tem certeza? Uma acusação errada prejudicará sua reputação.', {
       fontSize: '13px', fontFamily: 'Georgia, serif', color: C.dim
     }).setOrigin(0.5, 0.5);
 
     // Evidence summary
     const found = caseManager.getFoundEvidence();
     const weight = caseManager.getEvidenceWeight();
-    this.add.text(W / 2, 300, `${found.length} evidência(s) coletada(s)  ·  Peso total: ${weight}`, {
+    createText(this, W / 2, 300, `${found.length} evidência(s) coletada(s)  ·  Peso total: ${weight}`, {
       fontSize: '12px', fontFamily: 'Arial, sans-serif', color: '#888866'
     }).setOrigin(0.5, 0.5);
 
@@ -141,7 +142,7 @@ export default class AccusationScene extends Phaser.Scene {
 
     const W = 960, H = 540;
 
-    this.add.text(W / 2, 80, 'JULGAMENTO', {
+    createText(this, W / 2, 80, 'JULGAMENTO', {
       fontSize: '20px', fontFamily: 'Georgia, serif', color: C.accent, letterSpacing: 4
     }).setOrigin(0.5, 0.5);
 
@@ -149,18 +150,18 @@ export default class AccusationScene extends Phaser.Scene {
     const tierIdx     = reputationSystem.getTierIndex(rep);
     const threshold   = caseManager.getPersuasionThreshold(tierIdx);
 
-    this.add.text(W / 2, 118, `As evidências são insuficientes. O caso vai a julgamento.`, {
+    createText(this, W / 2, 118, `As evidências são insuficientes. O caso vai a julgamento.`, {
       fontSize: '13px', fontFamily: 'Georgia, serif', color: C.dim
     }).setOrigin(0.5, 0.5);
 
-    this.add.text(W / 2, 142, `Limiar de persuasão: ${threshold}  (role ${threshold} ou mais no d20)`, {
+    createText(this, W / 2, 142, `Limiar de persuasão: ${threshold}  (role ${threshold} ou mais no d20)`, {
       fontSize: '13px', fontFamily: 'Georgia, serif', color: C.accent
     }).setOrigin(0.5, 0.5);
 
     // d20 drawn with Graphics (no pre-baked texture — scales cleanly at any DPR)
     const die = this._drawD20(W / 2, 280, 58);
 
-    this.add.text(W / 2, 390, 'Clique no dado para rolar', {
+    createText(this, W / 2, 390, 'Clique no dado para rolar', {
       fontSize: '14px', fontFamily: 'Georgia, serif', color: C.text
     }).setOrigin(0.5, 0.5);
 
@@ -175,7 +176,6 @@ export default class AccusationScene extends Phaser.Scene {
 
   _drawD20(x, y, r) {
     const g = this.add.graphics();
-    const sides = 20;
 
     // Outer circle (die boundary)
     g.fillStyle(0x0e0c08);
@@ -205,7 +205,7 @@ export default class AccusationScene extends Phaser.Scene {
     }
 
     // "20" text in center
-    this.add.text(x, y + 2, '20', {
+    createText(this, x, y + 2, '20', {
       fontSize: '18px', fontFamily: 'Georgia, serif', color: '#c8962a'
     }).setOrigin(0.5, 0.5);
 
@@ -240,7 +240,7 @@ export default class AccusationScene extends Phaser.Scene {
     if (this._rollText && !temp) { /* keep */ }
     if (temp && this._tempRollText) this._tempRollText.destroy();
 
-    const t = this.add.text(W / 2, 320, String(value), {
+    const t = createText(this, W / 2, 320, String(value), {
       fontSize: '44px', fontFamily: 'Georgia, serif', color
     }).setOrigin(0.5, 0.5);
 
@@ -312,16 +312,16 @@ export default class AccusationScene extends Phaser.Scene {
     this.add.rectangle(W / 2, H / 2, 480, 260)
       .setOrigin(0.5, 0.5).setFillStyle(0, 0).setStrokeStyle(1, C.border).setDepth(51);
 
-    this.add.text(W / 2, H / 2 - 90, title, {
+    createText(this, W / 2, H / 2 - 90, title, {
       fontSize: '22px', fontFamily: 'Georgia, serif', color: titleColor, letterSpacing: 4
     }).setOrigin(0.5, 0.5).setDepth(52);
 
-    this.add.text(W / 2, H / 2 - 20, body, {
+    createText(this, W / 2, H / 2 - 20, body, {
       fontSize: '13px', fontFamily: 'Georgia, serif', color: C.text,
       align: 'center', lineSpacing: 6
     }).setOrigin(0.5, 0.5).setDepth(52);
 
-    const btn = this.add.text(W / 2, H / 2 + 90, btnLabel, {
+    const btn = createText(this, W / 2, H / 2 + 90, btnLabel, {
       fontSize: '14px', fontFamily: 'Georgia, serif', color: C.accent
     }).setOrigin(0.5, 0.5).setDepth(52).setInteractive({ useHandCursor: true });
 
@@ -336,7 +336,7 @@ export default class AccusationScene extends Phaser.Scene {
       .setOrigin(0.5, 0.5).setInteractive({ useHandCursor: true });
     this.add.rectangle(x, y, W, H).setOrigin(0.5, 0.5).setFillStyle(0, 0)
       .setStrokeStyle(1, C.border);
-    const txt = this.add.text(x, y, label, {
+    const txt = createText(this, x, y, label, {
       fontSize: '13px', fontFamily: 'Georgia, serif', color
     }).setOrigin(0.5, 0.5);
     bg.on('pointerover', () => { bg.setFillStyle(0x1e1e18); txt.setColor('#e8d5a3'); });

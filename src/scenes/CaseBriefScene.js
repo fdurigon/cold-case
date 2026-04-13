@@ -1,5 +1,6 @@
 import caseManager from '../systems/CaseManager.js';
 import DialogBox from '../ui/DialogBox.js';
+import createText from '../ui/DOMText.js';
 
 const BRIEF_TEXT =
   'Porto Escarlate, outono de 1892.\n\n' +
@@ -26,11 +27,11 @@ export default class CaseBriefScene extends Phaser.Scene {
     const def = caseManager.definition;
 
     // Header
-    this.add.text(W / 2, 44, def.codename.toUpperCase(), {
+    createText(this, W / 2, 44, def.codename.toUpperCase(), {
       fontSize: '20px', fontFamily: 'Georgia, serif', color: '#c8962a', letterSpacing: 4
     }).setOrigin(0.5, 0.5);
 
-    this.add.text(W / 2, 68, `Dificuldade ${def.difficulty}  ·  Porto Escarlate, 1892`, {
+    createText(this, W / 2, 68, `Dificuldade ${def.difficulty}  ·  Porto Escarlate, 1892`, {
       fontSize: '11px', fontFamily: 'Arial, sans-serif', color: '#444433'
     }).setOrigin(0.5, 0.5);
 
@@ -74,7 +75,7 @@ export default class CaseBriefScene extends Phaser.Scene {
     const border = this.add.rectangle(x, y, BW, BH)
       .setOrigin(0.5, 0.5).setFillStyle(0, 0).setStrokeStyle(1, 0x2a2510).setAlpha(0);
 
-    const text = this.add.text(x, y, label, {
+    const text = createText(this, x, y, label, {
       fontSize: '14px', fontFamily: 'Georgia, serif', color: '#c8962a'
     }).setOrigin(0.5, 0.5).setAlpha(0);
 

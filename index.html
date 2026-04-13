@@ -16,9 +16,17 @@
       overflow: hidden;
     }
     canvas { display: block; }
+    #game-container { position: relative; }
+    /* Crisp text rendering for DOM-based game text */
+    body {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
   </style>
 </head>
 <body>
+  <div id="game-container"></div>
   <script type="module" src="main.js"></script>
 </body>
 </html>

@@ -1,5 +1,6 @@
 import caseManager from '../systems/CaseManager.js';
 import saveManager from '../systems/SaveManager.js';
+import createText from '../ui/DOMText.js';
 
 // BootScene: loads game data and all visual assets, then transitions to MenuScene.
 
@@ -27,11 +28,11 @@ export default class BootScene extends Phaser.Scene {
     const barW = 280, barH = 3;
     const barX = (W - barW) / 2, barY = H / 2 + 44;
 
-    this.add.text(W / 2, H / 2, 'COLD CASE', {
+    createText(this, W / 2, H / 2, 'COLD CASE', {
       fontSize: '36px', fontFamily: 'Georgia, serif', color: '#c8962a'
     }).setOrigin(0.5, 0.5);
 
-    this.add.text(W / 2, H / 2 + 26, 'carregando...', {
+    createText(this, W / 2, H / 2 + 26, 'carregando...', {
       fontSize: '11px', fontFamily: 'Arial, sans-serif', color: '#444433'
     }).setOrigin(0.5, 0.5);
 

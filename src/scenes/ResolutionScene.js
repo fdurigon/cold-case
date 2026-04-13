@@ -2,6 +2,7 @@ import caseManager from '../systems/CaseManager.js';
 import saveManager from '../systems/SaveManager.js';
 import reputationSystem from '../systems/ReputationSystem.js';
 import DialogBox from '../ui/DialogBox.js';
+import createText from '../ui/DOMText.js';
 
 const C = {
   bg:      0x0d0d0b,
@@ -31,18 +32,18 @@ export default class ResolutionScene extends Phaser.Scene {
     this.add.rectangle(0, 0, W, H, C.bg).setOrigin(0, 0);
 
     // ── Header ──
-    this.add.text(W / 2, 36, 'CASO ENCERRADO', {
+    createText(this, W / 2, 36, 'CASO ENCERRADO', {
       fontSize: '22px', fontFamily: 'Georgia, serif', color: C.accent, letterSpacing: 6
     }).setOrigin(0.5, 0.5);
 
-    this.add.text(W / 2, 58, def.codename, {
+    createText(this, W / 2, 58, def.codename, {
       fontSize: '14px', fontFamily: 'Georgia, serif', color: C.dim
     }).setOrigin(0.5, 0.5);
 
     this.add.rectangle(W / 2, 70, 700, 1, C.border).setOrigin(0.5, 0);
 
     // ── Real crime reveal (typewriter) ──
-    this.add.text(W / 2, 88, 'A VERDADE POR TRÁS DO CASO', {
+    createText(this, W / 2, 88, 'A VERDADE POR TRÁS DO CASO', {
       fontSize: '11px', fontFamily: 'Arial, sans-serif', color: C.dim, letterSpacing: 3
     }).setOrigin(0.5, 0.5);
 
@@ -58,7 +59,7 @@ export default class ResolutionScene extends Phaser.Scene {
     const statY = 280;
     this.add.rectangle(W / 2, statY, 700, 1, C.border).setOrigin(0.5, 0);
 
-    this.add.text(W / 2, statY + 16, 'DESEMPENHO', {
+    createText(this, W / 2, statY + 16, 'DESEMPENHO', {
       fontSize: '11px', fontFamily: 'Arial, sans-serif', color: C.dim, letterSpacing: 3
     }).setOrigin(0.5, 0.5);
 
@@ -75,16 +76,16 @@ export default class ResolutionScene extends Phaser.Scene {
 
     stats.forEach((s, i) => {
       const sx = 180, sy = statY + 38 + i * 26;
-      this.add.text(sx, sy, s.label, {
+      createText(this, sx, sy, s.label, {
         fontSize: '12px', fontFamily: 'Arial, sans-serif', color: C.dim
       }).setOrigin(0, 0.5);
-      this.add.text(W - 180, sy, s.value, {
+      createText(this, W - 180, sy, s.value, {
         fontSize: '12px', fontFamily: 'Georgia, serif', color: C.text
       }).setOrigin(1, 0.5);
     });
 
     // Reputation gain animation
-    const repGainText = this.add.text(W / 2, statY + 150, `+${this._repDelta} REPUTAÇÃO`, {
+    const repGainText = createText(this, W / 2, statY + 150, `+${this._repDelta} REPUTAÇÃO`, {
       fontSize: '28px', fontFamily: 'Georgia, serif', color: C.success
     }).setOrigin(0.5, 0.5).setAlpha(0);
 
@@ -98,7 +99,7 @@ export default class ResolutionScene extends Phaser.Scene {
     });
 
     // ── Back to menu button ──
-    const menuBtn = this.add.text(W / 2, H - 30, 'Voltar ao Menu', {
+    const menuBtn = createText(this, W / 2, H - 30, 'Voltar ao Menu', {
       fontSize: '14px', fontFamily: 'Georgia, serif', color: C.accent
     }).setOrigin(0.5, 0.5).setInteractive({ useHandCursor: true }).setAlpha(0);
 

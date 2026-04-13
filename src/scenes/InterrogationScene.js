@@ -2,6 +2,7 @@ import caseManager from '../systems/CaseManager.js';
 import HUD from '../ui/HUD.js';
 import DialogBox from '../ui/DialogBox.js';
 import { drawPortrait } from '../ui/PortraitArt.js';
+import createText from '../ui/DOMText.js';
 
 const C = {
   bg:       0x0d0d0b,
@@ -53,13 +54,13 @@ export default class InterrogationScene extends Phaser.Scene {
       drawPortrait(this, sus.id, PORT_W / 2, portY + portH / 2, portW, portH);
     }
 
-    this.add.text(PORT_W / 2, 34 + PORT_H * 0.68, sus.name, {
+    createText(this, PORT_W / 2, 34 + PORT_H * 0.68, sus.name, {
       fontSize: '16px', fontFamily: 'Georgia, serif', color: C.text
     }).setOrigin(0.5, 0.5);
 
     this.add.rectangle(PORT_W / 2, 34 + PORT_H * 0.73, PORT_W - 40, 1, C.border).setOrigin(0.5, 0);
 
-    this.add.text(PORT_W / 2, 34 + PORT_H * 0.76, sus.profile, {
+    createText(this, PORT_W / 2, 34 + PORT_H * 0.76, sus.profile, {
       fontSize: '10px', fontFamily: 'Arial, sans-serif', color: C.dim,
       wordWrap: { width: PORT_W - 40 }, lineSpacing: 2, align: 'center'
     }).setOrigin(0.5, 0);
@@ -68,7 +69,7 @@ export default class InterrogationScene extends Phaser.Scene {
     const DLG_X = PORT_W + 8;
     const DLG_W = W - DLG_X - 8;
 
-    this.add.text(DLG_X + DLG_W / 2, 34 + 18, 'INTERROGATÓRIO', {
+    createText(this, DLG_X + DLG_W / 2, 34 + 18, 'INTERROGATÓRIO', {
       fontSize: '12px', fontFamily: 'Georgia, serif', color: C.accent, letterSpacing: 3
     }).setOrigin(0.5, 0.5);
 
@@ -84,7 +85,7 @@ export default class InterrogationScene extends Phaser.Scene {
     });
 
     this.add.rectangle(DLG_X, H - 205, DLG_W, 1, C.border).setOrigin(0, 0);
-    this.add.text(DLG_X + 4, H - 199, 'Resposta:', {
+    createText(this, DLG_X + 4, H - 199, 'Resposta:', {
       fontSize: '10px', fontFamily: 'Arial, sans-serif', color: C.dim
     }).setOrigin(0, 0);
 
@@ -122,7 +123,7 @@ export default class InterrogationScene extends Phaser.Scene {
     );
 
     if (available.length === 0) {
-      this.add.text(DLG_X + DLG_W / 2, startY + 40, 'Encontre evidências para\ndesbloquear perguntas.', {
+      createText(this, DLG_X + DLG_W / 2, startY + 40, 'Encontre evidências para\ndesbloquear perguntas.', {
         fontSize: '12px', fontFamily: 'Georgia, serif', color: C.dim, align: 'center'
       }).setOrigin(0.5, 0);
       return;
@@ -142,12 +143,12 @@ export default class InterrogationScene extends Phaser.Scene {
         .setOrigin(0, 0).setFillStyle(0, 0)
         .setStrokeStyle(1, used ? 0x1a1a18 : C.border);
 
-      const label = this.add.text(bx + 10, by + BTN_H / 2, dlg.label, {
+      const label = createText(this, bx + 10, by + BTN_H / 2, dlg.label, {
         fontSize: '11px', fontFamily: 'Arial, sans-serif', color: txtColor
       }).setOrigin(0, 0.5);
 
       if (used) {
-        this.add.text(bx + BTN_W - 10, by + BTN_H / 2, '✓', {
+        createText(this, bx + BTN_W - 10, by + BTN_H / 2, '✓', {
           fontSize: '11px', color: C.dim
         }).setOrigin(1, 0.5);
         return;
@@ -181,7 +182,7 @@ export default class InterrogationScene extends Phaser.Scene {
   }
 
   _showEvidenceNotification(name) {
-    const banner = this.add.text(480, 500, `Nova evidência: ${name}`, {
+    const banner = createText(this, 480, 500, `Nova evidência: ${name}`, {
       fontSize: '12px', fontFamily: 'Georgia, serif',
       color: C.success,
       backgroundColor: '#0a1a0a',
