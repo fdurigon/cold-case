@@ -1,5 +1,6 @@
 import saveManager from '../systems/SaveManager.js';
 import reputationSystem from '../systems/ReputationSystem.js';
+import createText from '../ui/DOMText.js';
 
 export default class MenuScene extends Phaser.Scene {
   constructor() {
@@ -23,14 +24,14 @@ export default class MenuScene extends Phaser.Scene {
     this.add.rectangle(W / 2, 360, 400, 1, 0x2a2510).setOrigin(0.5, 0.5);
 
     // Title
-    this.add.text(W / 2, 200, 'COLD CASE', {
+    createText(this, W / 2, 200, 'COLD CASE', {
       fontSize: '52px',
       fontFamily: 'Georgia, serif',
       color: '#c8962a',
       letterSpacing: 12
     }).setOrigin(0.5, 0.5);
 
-    this.add.text(W / 2, 250, 'investigações sem solução', {
+    createText(this, W / 2, 250, 'investigações sem solução', {
       fontSize: '14px',
       fontFamily: 'Georgia, serif',
       color: '#555544',
@@ -40,7 +41,7 @@ export default class MenuScene extends Phaser.Scene {
     // Reputation display
     const rep = saveManager.getReputation();
     const tier = reputationSystem.getTierName(rep);
-    this.add.text(W / 2, 310, `Reputação: ${rep}  ·  ${tier}`, {
+    createText(this, W / 2, 310, `Reputação: ${rep}  ·  ${tier}`, {
       fontSize: '13px',
       fontFamily: 'Georgia, serif',
       color: '#888866'
@@ -70,7 +71,7 @@ export default class MenuScene extends Phaser.Scene {
       .setFillStyle(0, 0)
       .setStrokeStyle(1, 0x2a2510);
 
-    const text = this.add.text(x, y, label, {
+    const text = createText(this, x, y, label, {
       fontSize: '14px',
       fontFamily: 'Georgia, serif',
       color: '#c8962a'

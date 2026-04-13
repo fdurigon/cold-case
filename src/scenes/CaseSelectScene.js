@@ -1,5 +1,6 @@
 import caseManager from '../systems/CaseManager.js';
 import saveManager from '../systems/SaveManager.js';
+import createText from '../ui/DOMText.js';
 
 const STARS = ['★☆☆', '★★☆', '★★★'];
 
@@ -12,7 +13,7 @@ export default class CaseSelectScene extends Phaser.Scene {
     const W = 960, H = 540;
     this.add.rectangle(0, 0, W, H, 0x0d0d0d).setOrigin(0, 0);
 
-    this.add.text(W / 2, 50, 'Selecionar Caso', {
+    createText(this, W / 2, 50, 'Selecionar Caso', {
       fontSize: '22px', fontFamily: 'Georgia, serif', color: '#c8962a'
     }).setOrigin(0.5, 0.5);
 
@@ -48,13 +49,13 @@ export default class CaseSelectScene extends Phaser.Scene {
       .setStrokeStyle(1, 0x2a2510);
 
     // Codename
-    this.add.text(cx, y + 32, def.codename, {
+    createText(this, cx, y + 32, def.codename, {
       fontSize: '18px', fontFamily: 'Georgia, serif', color: '#e8d5a3'
     }).setOrigin(0.5, 0.5);
 
     // Difficulty
     const stars = STARS[Math.min(def.difficulty - 1, 2)] || STARS[0];
-    this.add.text(cx, y + 60, `Dificuldade: ${stars}`, {
+    createText(this, cx, y + 60, `Dificuldade: ${stars}`, {
       fontSize: '13px', fontFamily: 'Arial, sans-serif', color: '#888866'
     }).setOrigin(0.5, 0.5);
 
@@ -63,12 +64,12 @@ export default class CaseSelectScene extends Phaser.Scene {
 
     // Status
     const { statusLabel, statusColor } = this._getCaseStatus(def.id);
-    this.add.text(cx, y + 108, statusLabel, {
+    createText(this, cx, y + 108, statusLabel, {
       fontSize: '13px', fontFamily: 'Arial, sans-serif', color: statusColor
     }).setOrigin(0.5, 0.5);
 
     // Flavor
-    this.add.text(cx, y + 152, 'Porto Escarlate, 1892', {
+    createText(this, cx, y + 152, 'Porto Escarlate, 1892', {
       fontSize: '11px', fontFamily: 'Georgia, serif', color: '#444433'
     }).setOrigin(0.5, 0.5);
 
@@ -76,7 +77,7 @@ export default class CaseSelectScene extends Phaser.Scene {
     const ctaLabel = this._getCaseStatus(def.id).statusLabel === 'Em Andamento'
       ? 'Continuar' : 'Iniciar';
 
-    this.add.text(cx, y + CH - 28, ctaLabel, {
+    createText(this, cx, y + CH - 28, ctaLabel, {
       fontSize: '13px', fontFamily: 'Georgia, serif', color: '#c8962a'
     }).setOrigin(0.5, 0.5);
 
@@ -118,7 +119,7 @@ export default class CaseSelectScene extends Phaser.Scene {
     this.add.rectangle(W / 2, H / 2, 400, 160)
       .setOrigin(0.5, 0.5).setFillStyle(0, 0).setStrokeStyle(1, 0x2a2510).setDepth(11);
 
-    this.add.text(W / 2, H / 2 - 40, 'Você já tem um caso em andamento.\nAbandonar o caso atual?', {
+    createText(this, W / 2, H / 2 - 40, 'Você já tem um caso em andamento.\nAbandonar o caso atual?', {
       fontSize: '13px', fontFamily: 'Georgia, serif', color: '#e8d5a3',
       align: 'center'
     }).setOrigin(0.5, 0.5).setDepth(12);
@@ -141,7 +142,7 @@ export default class CaseSelectScene extends Phaser.Scene {
   }
 
   _makeTextBtn(x, y, label, cb, depth = 0, color = '#c8962a') {
-    const btn = this.add.text(x, y, label, {
+    const btn = createText(this, x, y, label, {
       fontSize: '13px', fontFamily: 'Arial, sans-serif', color
     }).setOrigin(0.5, 0.5).setDepth(depth).setInteractive({ useHandCursor: true });
     btn.on('pointerover', () => btn.setColor('#e8d5a3'));

@@ -1,5 +1,6 @@
 import caseManager from '../systems/CaseManager.js';
 import HUD from '../ui/HUD.js';
+import createText from '../ui/DOMText.js';
 
 const NODE_RADIUS   = 10;
 const NODE_COLOR    = 0x2a2510;
@@ -21,14 +22,14 @@ export default class MapScene extends Phaser.Scene {
     this.add.image(0, 34, 'map_bg').setOrigin(0, 0);
 
     // Title bar
-    this.add.text(W / 2, 34 + 20, def.codename.toUpperCase(), {
+    createText(this, W / 2, 34 + 20, def.codename.toUpperCase(), {
       fontSize: '13px', fontFamily: 'Georgia, serif', color: '#555544', letterSpacing: 3
     }).setOrigin(0.5, 0.5);
 
     this.add.rectangle(W / 2, 34 + 34, 600, 1, 0x1e1a10).setOrigin(0.5, 0);
 
     // Instruction
-    this.add.text(W / 2, H - 58, 'Selecione um local para investigar', {
+    createText(this, W / 2, H - 58, 'Selecione um local para investigar', {
       fontSize: '11px', fontFamily: 'Arial, sans-serif', color: '#333322'
     }).setOrigin(0.5, 0.5);
 
@@ -68,13 +69,13 @@ export default class MapScene extends Phaser.Scene {
 
       // Check icon if evidence found here
       if (hasClue) {
-        this.add.text(px + NODE_RADIUS + 2, py - 6, '✦', {
+        createText(this, px + NODE_RADIUS + 2, py - 6, '✦', {
           fontSize: '9px', color: '#c8962a'
         }).setOrigin(0, 0.5);
       }
 
       // Location label
-      this.add.text(px, py + NODE_RADIUS + 9, loc.name, {
+      createText(this, px, py + NODE_RADIUS + 9, loc.name, {
         fontSize: '10px', fontFamily: 'Arial, sans-serif',
         color: visited ? '#888866' : '#555544'
       }).setOrigin(0.5, 0);
@@ -114,7 +115,7 @@ export default class MapScene extends Phaser.Scene {
     this._hideTooltip();
 
     const label = visited ? loc.name : `${loc.name}  (não visitado)`;
-    this._tooltip = this.add.text(x, y - NODE_RADIUS - 14, label, {
+    this._tooltip = createText(this, x, y - NODE_RADIUS - 14, label, {
       fontSize: '11px', fontFamily: 'Arial, sans-serif',
       color: '#e8d5a3',
       backgroundColor: '#0d0d0d',

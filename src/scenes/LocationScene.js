@@ -3,6 +3,7 @@ import toolSystem from '../systems/ToolSystem.js';
 import HUD from '../ui/HUD.js';
 import DialogBox from '../ui/DialogBox.js';
 import { drawLocationArt } from '../ui/LocationArt.js';
+import createText from '../ui/DOMText.js';
 
 // Maps location id → preloaded texture key
 const LOCATION_TEXTURE = {
@@ -82,7 +83,7 @@ export default class LocationScene extends Phaser.Scene {
     this.add.rectangle(PAN_X, TOP, 1, PAN_H, C.panelBorder).setOrigin(0, 0);
 
     // Location name
-    this.add.text(PAN_X + PAN_W / 2, TOP + 16, loc.name.toUpperCase(), {
+    createText(this, PAN_X + PAN_W / 2, TOP + 16, loc.name.toUpperCase(), {
       fontSize: '12px', fontFamily: 'Georgia, serif',
       color: C.textAccent, letterSpacing: 2
     }).setOrigin(0.5, 0);
@@ -175,13 +176,13 @@ export default class LocationScene extends Phaser.Scene {
         .setFillStyle(0, 0)
         .setStrokeStyle(1, searched ? 0x1a1a18 : C.panelBorder);
 
-      const label = this.add.text(bx + 8, by + BTN_H / 2, obj.label, {
+      const label = createText(this, bx + 8, by + BTN_H / 2, obj.label, {
         fontSize: '11px', fontFamily: 'Arial, sans-serif', color: txtColor
       }).setOrigin(0, 0.5);
 
       // Check icon if evidence was found here
       if (hasEvClue) {
-        this.add.text(bx + BTN_W - 14, by + BTN_H / 2, '✓', {
+        createText(this, bx + BTN_W - 14, by + BTN_H / 2, '✓', {
           fontSize: '11px', color: C.textSuccess
         }).setOrigin(1, 0.5);
       }
@@ -202,7 +203,7 @@ export default class LocationScene extends Phaser.Scene {
     const count = caseManager.getVisitSearchCount(this._locationId);
     const max   = this._loc.max_searches_per_visit;
 
-    this._counterText = this.add.text(PAN_X + PAN_W / 2, y,
+    this._counterText = createText(this, PAN_X + PAN_W / 2, y,
       `Buscas esta visita: ${count} / ${max}`, {
         fontSize: '10px', fontFamily: 'Arial, sans-serif', color: C.textDim
       }).setOrigin(0.5, 0);
@@ -270,7 +271,7 @@ export default class LocationScene extends Phaser.Scene {
   }
 
   _notifyEvidence(ev) {
-    const banner = this.add.text(480, 480, `Nova evidência: ${ev.name}`, {
+    const banner = createText(this, 480, 480, `Nova evidência: ${ev.name}`, {
       fontSize: '12px', fontFamily: 'Georgia, serif',
       color: '#60c878',
       backgroundColor: '#0a1a0a',

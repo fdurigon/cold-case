@@ -1,6 +1,7 @@
 import toolSystem from '../systems/ToolSystem.js';
 import saveManager from '../systems/SaveManager.js';
 import reputationSystem from '../systems/ReputationSystem.js';
+import createText from './DOMText.js';
 
 const C = {
   bg:              0x0d0d0d,
@@ -42,7 +43,7 @@ export default class HUD {
 
     const rep      = saveManager.getReputation();
     const tierName = reputationSystem.getTierName(rep);
-    this._repText  = s.add.text(12, H / 2, `REP ${rep}  —  ${tierName}`, {
+    this._repText  = createText(s, 12, H / 2, `REP ${rep}  —  ${tierName}`, {
       fontSize: '12px', fontFamily: 'Georgia, serif', color: C.textAccent
     }).setOrigin(0, 0.5).setDepth(this._depth + 1);
 
@@ -66,7 +67,7 @@ export default class HUD {
   }
 
   _makeTopBtn(scene, x, y, label, cb) {
-    const btn = scene.add.text(x, y, label, {
+    const btn = createText(scene, x, y, label, {
       fontSize: '12px', fontFamily: 'Arial, sans-serif', color: C.textAccent
     }).setOrigin(1, 0.5).setDepth(this._depth + 1).setInteractive({ useHandCursor: true });
 
@@ -103,7 +104,7 @@ export default class HUD {
         .setStrokeStyle(1, active ? C.toolBorderOn : C.toolBorderOff)
         .setDepth(this._depth + 2);
 
-      const label = s.add.text(bx + BTN_W / 2, by + BTN_H / 2, tool.name, {
+      const label = createText(s, bx + BTN_W / 2, by + BTN_H / 2, tool.name, {
         fontSize: '11px', fontFamily: 'Arial, sans-serif',
         color: active ? C.toolLabelOn : C.toolLabelOff
       }).setOrigin(0.5, 0.5).setDepth(this._depth + 3);

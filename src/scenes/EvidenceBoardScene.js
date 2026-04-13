@@ -1,4 +1,5 @@
 import caseManager from '../systems/CaseManager.js';
+import createText from '../ui/DOMText.js';
 
 const C = {
   bg:     0x0d0d0b,
@@ -26,7 +27,7 @@ export default class EvidenceBoardScene extends Phaser.Scene {
     this.add.rectangle(0, 0, W, H, C.bg, 0.97).setOrigin(0, 0);
 
     // Header
-    this.add.text(W / 2, 28, 'QUADRO DE EVIDÊNCIAS', {
+    createText(this, W / 2, 28, 'QUADRO DE EVIDÊNCIAS', {
       fontSize: '16px', fontFamily: 'Georgia, serif',
       color: C.accent, letterSpacing: 4
     }).setOrigin(0.5, 0.5);
@@ -36,7 +37,7 @@ export default class EvidenceBoardScene extends Phaser.Scene {
     const found = caseManager.getFoundEvidence();
 
     if (found.length === 0) {
-      this.add.text(W / 2, H / 2, 'Nenhuma evidência coletada ainda.', {
+      createText(this, W / 2, H / 2, 'Nenhuma evidência coletada ainda.', {
         fontSize: '14px', fontFamily: 'Georgia, serif', color: C.dim
       }).setOrigin(0.5, 0.5);
     } else {
@@ -45,12 +46,12 @@ export default class EvidenceBoardScene extends Phaser.Scene {
 
     // Counter
     const total = caseManager.getTotalEvidenceCount();
-    this.add.text(W / 2, H - 20, `${found.length} / ${total} evidências coletadas`, {
+    createText(this, W / 2, H - 20, `${found.length} / ${total} evidências coletadas`, {
       fontSize: '11px', fontFamily: 'Arial, sans-serif', color: C.dim
     }).setOrigin(0.5, 1);
 
     // Close button
-    const closeBtn = this.add.text(W - 20, 28, '✕  Fechar', {
+    const closeBtn = createText(this, W - 20, 28, '✕  Fechar', {
       fontSize: '13px', fontFamily: 'Arial, sans-serif', color: C.accent
     }).setOrigin(1, 0.5).setInteractive({ useHandCursor: true });
 
@@ -95,7 +96,7 @@ export default class EvidenceBoardScene extends Phaser.Scene {
       .setDisplaySize(36, 36).setOrigin(0.5, 0.5);
 
     // Name
-    this.add.text(cx - W / 2 + 52, cy - H / 2 + 16, ev.name, {
+    createText(this, cx - W / 2 + 52, cy - H / 2 + 16, ev.name, {
       fontSize: '11px', fontFamily: 'Georgia, serif', color: C.text,
       wordWrap: { width: W - 60 }
     }).setOrigin(0, 0.5);
@@ -104,14 +105,14 @@ export default class EvidenceBoardScene extends Phaser.Scene {
     this.add.rectangle(cx, cy - H / 2 + 34, W - 16, 1, C.border).setOrigin(0.5, 0);
 
     // Description
-    this.add.text(cx - W / 2 + 8, cy - H / 2 + 42, ev.description, {
+    createText(this, cx - W / 2 + 8, cy - H / 2 + 42, ev.description, {
       fontSize: '10px', fontFamily: 'Georgia, serif', color: C.dim,
       wordWrap: { width: W - 16 }, lineSpacing: 2
     }).setOrigin(0, 0);
 
     // Weight indicator
     const dots = '●'.repeat(ev.weight) + '○'.repeat(Math.max(0, 4 - ev.weight));
-    this.add.text(cx + W / 2 - 8, cy + H / 2 - 8, dots, {
+    createText(this, cx + W / 2 - 8, cy + H / 2 - 8, dots, {
       fontSize: '9px', color: C.accent
     }).setOrigin(1, 1);
   }

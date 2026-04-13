@@ -1,4 +1,5 @@
 // Typewriter-effect text renderer for atmospheric descriptions and dialog lines.
+import createText from './DOMText.js';
 
 export default class DialogBox {
   constructor(scene, x, y, width, height, options = {}) {
@@ -38,7 +39,8 @@ export default class DialogBox {
       ).setOrigin(0, 0);
     }
 
-    this._textObj = this.scene.add.text(
+    this._textObj = createText(
+      this.scene,
       this.x + padding,
       this.y + padding,
       '',
