@@ -5,7 +5,32 @@
  * Returns a Phaser DOMElement with .setText() and .setColor() convenience
  * methods so it can be used as a drop-in replacement for Phaser.Text.
  */
+
+// Track which scenes have already had pause/resume DOM-visibility handlers attached
+const _pauseSetup = new WeakSet();
+
+function _setupPauseResume(scene) {
+  if (_pauseSetup.has(scene)) return;
+  _pauseSetup.add(scene);
+
+  // When a scene is paused (e.g. for an overlay), hide its DOM nodes so they
+  // don't bleed through the overlay's canvas rectangle.
+  scene.events.on('pause', () => {
+    scene.children.list
+      .filter(c => c.type === 'DOMElement' && c.node)
+      .forEach(c => { c.node.style.visibility = 'hidden'; });
+  });
+
+  scene.events.on('resume', () => {
+    scene.children.list
+      .filter(c => c.type === 'DOMElement' && c.node)
+      .forEach(c => { c.node.style.visibility = 'visible'; });
+  });
+}
+
 export default function createText(scene, x, y, text, style = {}) {
+  _setupPauseResume(scene);
+
   const el = document.createElement('div');
 
   // Core font properties
@@ -40,6 +65,10 @@ export default function createText(scene, x, y, text, style = {}) {
   // Don't block canvas pointer events; game text isn't user-selectable
   el.style.pointerEvents = 'none';
   el.style.userSelect    = 'none';
+  // Prevent the browser's default I-beam text cursor from showing through
+  // the DOM overlay — even with pointer-events:none some browsers still render
+  // the element's own cursor style.
+  el.style.cursor        = 'default';
 
   el.textContent = text;
 
@@ -56,6 +85,18 @@ export default function createText(scene, x, y, text, style = {}) {
   dom.setColor = function (color) {
     el.style.color = color;
     return this;
+  };
+
+  // Override setInteractive so that useHandCursor also applies 'pointer' cursor
+  // to the DOM element itself. Phaser only changes canvas.style.cursor, which is
+  // invisible when the DOM overlay sits on top.
+  const _origSetInteractive = dom.setInteractive.bind(dom);
+  dom.setInteractive = function (config) {
+    const result = _origSetInteractive(config);
+    if (config && config.useHandCursor) {
+      el.style.cursor = 'pointer';
+    }
+    return result;
   };
 
   // Force initial size measurement so .width / .height are available
