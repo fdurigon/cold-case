@@ -136,7 +136,7 @@ export default class LocationScene extends Phaser.Scene {
       showEvidenceBoard: true,
       onBack: () => this._returnToMap(),
       onEvidenceBoard: () => {
-        this.scene.pause();
+        this.scene.sleep();
         this.scene.launch('EvidenceBoardScene', { returnScene: 'LocationScene' });
       },
       onSuspects: () => {

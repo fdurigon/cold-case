@@ -97,7 +97,7 @@ export default class MapScene extends Phaser.Scene {
       showBack: false,
       showEvidenceBoard: true,
       onEvidenceBoard: () => {
-        this.scene.pause();
+        this.scene.sleep();
         this.scene.launch('EvidenceBoardScene', { returnScene: 'MapScene' });
       },
       onSuspects: () => {

@@ -9,27 +9,29 @@
 // Track which scenes have already had pause/resume DOM-visibility handlers attached
 const _pauseSetup = new WeakSet();
 
-function _setupPauseResume(scene) {
+function _setupSleepHandlers(scene) {
   if (_pauseSetup.has(scene)) return;
   _pauseSetup.add(scene);
 
-  // When a scene is paused (e.g. for an overlay), hide its DOM nodes so they
-  // don't bleed through the overlay's canvas rectangle.
-  scene.events.on('pause', () => {
-    scene.children.list
-      .filter(c => c.type === 'DOMElement' && c.node)
-      .forEach(c => { c.node.style.visibility = 'hidden'; });
-  });
+  const hideDOMNodes = () => scene.children.list
+    .filter(c => c.type === 'DOMElement' && c.node)
+    .forEach(c => { c.node.style.visibility = 'hidden'; });
 
-  scene.events.on('resume', () => {
-    scene.children.list
-      .filter(c => c.type === 'DOMElement' && c.node)
-      .forEach(c => { c.node.style.visibility = 'visible'; });
-  });
+  const showDOMNodes = () => scene.children.list
+    .filter(c => c.type === 'DOMElement' && c.node)
+    .forEach(c => { c.node.style.visibility = 'visible'; });
+
+  // sleep() stops both update AND render — DOM nodes live in the HTML overlay
+  // above the canvas so they must be hidden/shown manually.
+  scene.events.on('sleep',  hideDOMNodes);
+  scene.events.on('wake',   showDOMNodes);
+  // Fallback for any remaining pause() usage.
+  scene.events.on('pause',  hideDOMNodes);
+  scene.events.on('resume', showDOMNodes);
 }
 
 export default function createText(scene, x, y, text, style = {}) {
-  _setupPauseResume(scene);
+  _setupSleepHandlers(scene);
 
   const el = document.createElement('div');
 

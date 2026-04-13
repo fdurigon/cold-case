@@ -24,7 +24,7 @@ export default class EvidenceBoardScene extends Phaser.Scene {
     const W = 960, H = 540;
 
     // Semi-transparent overlay (this scene is launched over another)
-    this.add.rectangle(0, 0, W, H, C.bg, 0.97).setOrigin(0, 0);
+    this.add.rectangle(0, 0, W, H, C.bg, 1).setOrigin(0, 0);
 
     // Header
     createText(this, W / 2, 28, 'QUADRO DE EVIDÊNCIAS', {
@@ -120,8 +120,8 @@ export default class EvidenceBoardScene extends Phaser.Scene {
   _close() {
     this.cameras.main.fadeOut(200, 0, 0, 0);
     this.cameras.main.once('camerafadeoutcomplete', () => {
+      this.scene.wake(this._returnScene);
       this.scene.stop();
-      this.scene.resume(this._returnScene);
     });
   }
 }

@@ -72,7 +72,7 @@ export default class SuspectsScene extends Phaser.Scene {
         });
       },
       onEvidenceBoard: () => {
-        this.scene.pause();
+        this.scene.sleep();
         this.scene.launch('EvidenceBoardScene', { returnScene: 'SuspectsScene' });
       }
     });
