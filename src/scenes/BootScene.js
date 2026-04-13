@@ -20,7 +20,8 @@ export default class BootScene extends Phaser.Scene {
 
     // Suspect portraits (loaded as available; fallback to procedural if missing)
     this.load.image('suspect_001', 'assets/portraits/suspect_001.png');
-    // suspect_002 and suspect_003 will be added when images are ready
+    this.load.image('suspect_002', 'assets/portraits/suspect_002.png');
+    this.load.image('suspect_003', 'assets/portraits/suspect_003.png');
 
     const W = 960, H = 540;
     const barW = 280, barH = 3;
