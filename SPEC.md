@@ -33,11 +33,25 @@ A browser-based investigation game in which the player assumes the role of a det
 | Auto-center | `Phaser.Scale.CENTER_BOTH` |
 | Min width | 390 px (mobile portrait not supported — landscape only) |
 | Max width | 1440 px |
-| HiDPI fix | `render.resolution = fitScale × devicePixelRatio` |
+| Parent element | `<div id="game-container">` |
 
 All UI positioning uses the base resolution coordinate system (0–960 × 0–540). Phaser's scale manager handles the physical-to-logical mapping.
 
-**HiDPI / Retina fix:** `render.resolution` is set to `fitScale × window.devicePixelRatio` at startup so the canvas buffer matches the physical pixel count exactly, eliminating blur on Retina displays. This is calculated once in `main.js` before the Phaser game is created.
+### 2.2 Text Rendering (DOM-based)
+
+All game text is rendered via **Phaser DOM Elements** (`scene.add.dom()`) instead of canvas-based `scene.add.text()`. The utility `src/ui/DOMText.js` provides a `createText(scene, x, y, text, style)` function that creates HTML `<div>` elements overlaid on the canvas.
+
+**Why:** Canvas text is rasterized as bitmap — it blurs on HiDPI/Retina displays and cannot be selected. DOM text uses the browser's native text engine, which is always crisp at any scale.
+
+**Config requirements in `main.js`:**
+- `parent: 'game-container'` — Phaser needs a parent div to attach the DOM overlay container.
+- `dom: { createContainer: true }` — enables `scene.add.dom()`.
+
+**Rules for new text:**
+- Always use `createText()` from `src/ui/DOMText.js` — never use `scene.add.text()`.
+- DOM text elements have `pointer-events: none` so clicks pass through to canvas interactive objects.
+- `createText()` returns a Phaser DOMElement with `.setText()` and `.setColor()` convenience methods.
+- `DialogBox.js` uses `createText()` internally — no special handling needed for typewriter text.
 
 ---
 
@@ -76,7 +90,8 @@ cold-case/
 │   │   ├── ReputationSystem.js
 │   │   └── ToolSystem.js
 │   └── ui/
-│       ├── DialogBox.js     # Atmospheric text renderer
+│       ├── DOMText.js       # Native DOM text factory (always use instead of add.text)
+│       ├── DialogBox.js     # Atmospheric text renderer (typewriter effect)
 │       ├── HUD.js           # Persistent top/bottom bar
 │       ├── PortraitArt.js   # Procedural portrait fallback (Graphics-based)
 │       └── LocationArt.js   # Procedural location fallback
