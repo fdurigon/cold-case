@@ -428,9 +428,19 @@ Displays all available cases as cards or tiles. Each case card shows:
 
 All cases are available from the start (no unlock gating). The player can select any case freely.
 
-**Replay:** A solved case can be replayed. Replaying resets case progress but does **not** affect reputation (no reputation gain or loss on replay).
+**Card actions — buttons shown depend on case status:**
 
-**Active case rule:** Only one case can be active at a time. If the player selects a new case while another is in progress, a confirmation dialog appears: *"Você já tem um caso em andamento. Abandonar o caso atual?"* Abandoning discards all progress on the current case (no reputation penalty). This simplifies the save state to a single `active_case` slot.
+| Status | Buttons | Action |
+|---|---|---|
+| Novo | `Iniciar` | → CaseBriefScene (fresh start) |
+| Em Andamento | `Continuar` + `Reiniciar` | `Continuar` → MapScene (resumes saved state); `Reiniciar` → abandons progress, → CaseBriefScene |
+| Resolvido | `Reiniciar` | → CaseBriefScene (fresh start, no reputation effect) |
+
+The card background is decorative only — clicking it does nothing. Only the explicit buttons act.
+
+**Replay:** A solved case can be replayed via `Reiniciar`. Replaying resets case progress but does **not** affect reputation (no reputation gain or loss on replay).
+
+**Active case rule:** Only one case can be active at a time (`active_case` slot in save state). In v0.1 there is only one case, so conflict is impossible. When multiple cases are added, selecting a new case while another is in progress must prompt the player to confirm abandonment before proceeding.
 
 ---
 

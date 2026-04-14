@@ -39,10 +39,8 @@ export default class CaseSelectScene extends Phaser.Scene {
     const x  = cx - CW / 2;
     const y  = cy - CH / 2;
 
-    // Card background
-    const card = this.add.rectangle(cx, cy, CW, CH, 0x141410)
-      .setOrigin(0.5, 0.5)
-      .setInteractive({ useHandCursor: true });
+    // Card background (decorative only)
+    this.add.rectangle(cx, cy, CW, CH, 0x141410).setOrigin(0.5, 0.5);
     this.add.rectangle(cx, cy, CW, CH)
       .setOrigin(0.5, 0.5)
       .setFillStyle(0, 0)
@@ -63,7 +61,7 @@ export default class CaseSelectScene extends Phaser.Scene {
     this.add.rectangle(cx, y + 78, CW - 40, 1, 0x2a2510).setOrigin(0.5, 0);
 
     // Status
-    const { statusLabel, statusColor } = this._getCaseStatus(def.id);
+    const { statusLabel, statusColor, status } = this._getCaseStatus(def.id);
     createText(this, cx, y + 108, statusLabel, {
       fontSize: '13px', fontFamily: 'Arial, sans-serif', color: statusColor
     }).setOrigin(0.5, 0.5);
@@ -73,17 +71,17 @@ export default class CaseSelectScene extends Phaser.Scene {
       fontSize: '11px', fontFamily: 'Georgia, serif', color: '#444433'
     }).setOrigin(0.5, 0.5);
 
-    // CTA
-    const ctaLabel = this._getCaseStatus(def.id).statusLabel === 'Em Andamento'
-      ? 'Continuar' : 'Iniciar';
-
-    createText(this, cx, y + CH - 28, ctaLabel, {
-      fontSize: '13px', fontFamily: 'Georgia, serif', color: '#c8962a'
-    }).setOrigin(0.5, 0.5);
-
-    card.on('pointerover', () => card.setFillStyle(0x1e1e18));
-    card.on('pointerout',  () => card.setFillStyle(0x141410));
-    card.on('pointerdown', () => this._selectCase(def));
+    // Action buttons based on status
+    const btnY = y + CH - 28;
+    if (status === 'novo') {
+      this._makeTextBtn(cx, btnY, 'Iniciar', () => this._startCase(def));
+    } else if (status === 'andamento') {
+      this._makeTextBtn(cx - 60, btnY, 'Continuar', () => this._continueCase(def));
+      this._makeTextBtn(cx + 60, btnY, 'Reiniciar', () => this._restartCase(def), 0, '#888866');
+    } else {
+      // resolvido
+      this._makeTextBtn(cx, btnY, 'Reiniciar', () => this._restartCase(def));
+    }
   }
 
   _getCaseStatus(caseId) {
@@ -91,47 +89,26 @@ export default class CaseSelectScene extends Phaser.Scene {
     const completed = saveManager.getCompletedCase(caseId);
 
     if (completed)
-      return { statusLabel: `Resolvido — ${completed.final_reputation_earned} rep`, statusColor: '#40a860' };
+      return { status: 'resolvido', statusLabel: `Resolvido — ${completed.final_reputation_earned} rep`, statusColor: '#40a860' };
     if (active && active.case_id === caseId)
-      return { statusLabel: 'Em Andamento', statusColor: '#c8962a' };
-    return { statusLabel: 'Novo', statusColor: '#666655' };
+      return { status: 'andamento', statusLabel: 'Em Andamento', statusColor: '#c8962a' };
+    return { status: 'novo', statusLabel: 'Novo', statusColor: '#666655' };
   }
 
-  _selectCase(def) {
+  _continueCase(def) {
+    caseManager.startCase(def.id);
+    this.cameras.main.fadeOut(250, 0, 0, 0);
+    this.cameras.main.once('camerafadeoutcomplete', () => {
+      this.scene.start('MapScene', { caseId: def.id });
+    });
+  }
+
+  _restartCase(def) {
     const active = saveManager.getActiveCase();
-
-    // If another case is in progress, ask before abandoning
-    if (active && active.case_id !== def.id) {
-      this._showAbandonConfirm(def);
-      return;
-    }
-
-    this._startCase(def);
-  }
-
-  _showAbandonConfirm(def) {
-    const W = 960, H = 540;
-    const overlay = this.add.rectangle(W / 2, H / 2, W, H, 0x000000, 0.7)
-      .setOrigin(0.5, 0.5).setDepth(10).setInteractive();
-
-    const box = this.add.rectangle(W / 2, H / 2, 400, 160, 0x141410)
-      .setOrigin(0.5, 0.5).setDepth(11);
-    this.add.rectangle(W / 2, H / 2, 400, 160)
-      .setOrigin(0.5, 0.5).setFillStyle(0, 0).setStrokeStyle(1, 0x2a2510).setDepth(11);
-
-    createText(this, W / 2, H / 2 - 40, 'Você já tem um caso em andamento.\nAbandonar o caso atual?', {
-      fontSize: '13px', fontFamily: 'Georgia, serif', color: '#e8d5a3',
-      align: 'center'
-    }).setOrigin(0.5, 0.5).setDepth(12);
-
-    this._makeTextBtn(W / 2 - 70, H / 2 + 30, 'Cancelar', () => {
-      overlay.destroy(); box.destroy();
-    }, 12);
-
-    this._makeTextBtn(W / 2 + 70, H / 2 + 30, 'Abandonar', () => {
+    if (active && active.case_id === def.id) {
       caseManager.abandonCase();
-      this._startCase(def);
-    }, 12, '#c84040');
+    }
+    this._startCase(def);
   }
 
   _startCase(def) {
