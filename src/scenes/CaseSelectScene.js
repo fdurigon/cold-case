@@ -88,10 +88,12 @@ export default class CaseSelectScene extends Phaser.Scene {
     const active    = saveManager.getActiveCase();
     const completed = saveManager.getCompletedCase(caseId);
 
-    if (completed)
-      return { status: 'resolvido', statusLabel: `Resolvido — ${completed.final_reputation_earned} rep`, statusColor: '#40a860' };
+    // Active case takes priority over completed record — player may have restarted
+    // after solving, so both can coexist in localStorage simultaneously.
     if (active && active.case_id === caseId)
       return { status: 'andamento', statusLabel: 'Em Andamento', statusColor: '#c8962a' };
+    if (completed)
+      return { status: 'resolvido', statusLabel: `Resolvido — ${completed.final_reputation_earned} rep`, statusColor: '#40a860' };
     return { status: 'novo', statusLabel: 'Novo', statusColor: '#666655' };
   }
 
