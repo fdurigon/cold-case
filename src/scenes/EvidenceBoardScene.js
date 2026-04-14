@@ -66,7 +66,7 @@ export default class EvidenceBoardScene extends Phaser.Scene {
   }
 
   _drawEvidenceGrid(evidence) {
-    const CARD_W = 180, CARD_H = 130;
+    const CARD_W = 180, CARD_H = 150;
     const COLS   = Math.min(evidence.length, 5);
     const GAP_X  = 8, GAP_Y  = 10;
     const W      = 960;
@@ -93,30 +93,31 @@ export default class EvidenceBoardScene extends Phaser.Scene {
 
     // Evidence image — use real texture when available, otherwise draw a
     // generic icon placeholder so the layout doesn't break.
-    const iconX = cx - W / 2 + 26, iconY = cy - H / 2 + 26;
+    // Icon: 52×52, centered at (iconX, iconY); bottom edge at cy - H/2 + 58
+    const iconX = cx - W / 2 + 32, iconY = cy - H / 2 + 32;
     if (this.textures.exists(ev.image)) {
-      this.add.image(iconX, iconY, ev.image).setDisplaySize(36, 36).setOrigin(0.5, 0.5);
+      this.add.image(iconX, iconY, ev.image).setDisplaySize(52, 52).setOrigin(0.5, 0.5);
     } else {
-      // Placeholder: small amber square with a "✦" glyph
-      this.add.rectangle(iconX, iconY, 36, 36, 0x1e1a0a).setOrigin(0.5, 0.5);
-      this.add.rectangle(iconX, iconY, 36, 36)
+      // Placeholder: amber square with a "✦" glyph
+      this.add.rectangle(iconX, iconY, 52, 52, 0x1e1a0a).setOrigin(0.5, 0.5);
+      this.add.rectangle(iconX, iconY, 52, 52)
         .setOrigin(0.5, 0.5).setFillStyle(0, 0).setStrokeStyle(1, C.border);
       this.add.text(iconX, iconY, '✦', {
-        fontSize: '16px', color: '#c8962a', fontFamily: 'Georgia, serif'
+        fontSize: '22px', color: '#c8962a', fontFamily: 'Georgia, serif'
       }).setOrigin(0.5, 0.5);
     }
 
-    // Name
-    createText(this, cx - W / 2 + 52, cy - H / 2 + 16, ev.name, {
+    // Name (to the right of icon, vertically centred in the icon area)
+    createText(this, cx - W / 2 + 64, cy - H / 2 + 24, ev.name, {
       fontSize: '11px', fontFamily: 'Georgia, serif', color: C.text,
-      wordWrap: { width: W - 60 }
+      wordWrap: { width: W - 72 }
     }).setOrigin(0, 0.5);
 
-    // Divider
-    this.add.rectangle(cx, cy - H / 2 + 34, W - 16, 1, C.border).setOrigin(0.5, 0);
+    // Divider — placed 6px below the icon bottom edge (cy - H/2 + 58 + 6 = cy - H/2 + 64)
+    this.add.rectangle(cx, cy - H / 2 + 64, W - 16, 1, C.border).setOrigin(0.5, 0);
 
     // Description
-    createText(this, cx - W / 2 + 8, cy - H / 2 + 42, ev.description, {
+    createText(this, cx - W / 2 + 8, cy - H / 2 + 72, ev.description, {
       fontSize: '10px', fontFamily: 'Georgia, serif', color: C.dim,
       wordWrap: { width: W - 16 }, lineSpacing: 2
     }).setOrigin(0, 0);
