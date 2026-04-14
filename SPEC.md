@@ -49,7 +49,8 @@ All game text is rendered via **Phaser DOM Elements** (`scene.add.dom()`) instea
 
 **Rules for new text:**
 - Always use `createText()` from `src/ui/DOMText.js` — never use `scene.add.text()`.
-- DOM text elements have `pointer-events: none` so clicks pass through to canvas interactive objects.
+- By default, DOM text elements have `pointer-events: none` so clicks pass through to the canvas below.
+- Calling `.setInteractive({ useHandCursor: true })` on a DOM text element switches it to `pointer-events: auto` and maps Phaser-style events (`pointerdown`, `pointerover`, `pointerout`) to native DOM events (`click`, `mouseover`, `mouseout`). Use this for clickable text buttons.
 - `createText()` returns a Phaser DOMElement with `.setText()` and `.setColor()` convenience methods.
 - `DialogBox.js` uses `createText()` internally — no special handling needed for typewriter text.
 
