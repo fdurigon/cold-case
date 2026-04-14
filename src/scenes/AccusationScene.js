@@ -38,7 +38,7 @@ export default class AccusationScene extends Phaser.Scene {
     this.add.rectangle(W / 2, 62, 500, 1, C.border).setOrigin(0.5, 0);
 
     // Suspect portrait — real image if available, fallback to procedural
-    const portW = 120, portH = 140;
+    const portW = 160, portH = 188;
     const portX = W / 2 - portW / 2, portY = 160 - portH / 2;
     if (this.textures.exists(sus.id)) {
       const img  = this.add.image(W / 2, portY, sus.id).setOrigin(0.5, 0);
@@ -52,19 +52,19 @@ export default class AccusationScene extends Phaser.Scene {
       drawPortrait(this, sus.id, W / 2, 160, portW, portH);
     }
 
-    createText(this, W / 2, 232, sus.name, {
+    createText(this, W / 2, 272, sus.name, {
       fontSize: '18px', fontFamily: 'Georgia, serif', color: C.text
     }).setOrigin(0.5, 0.5);
 
     // Warning
-    createText(this, W / 2, 268, 'Tem certeza? Uma acusação errada prejudicará sua reputação.', {
+    createText(this, W / 2, 305, 'Tem certeza? Uma acusação errada prejudicará sua reputação.', {
       fontSize: '13px', fontFamily: 'Georgia, serif', color: C.dim
     }).setOrigin(0.5, 0.5);
 
     // Evidence summary
     const found = caseManager.getFoundEvidence();
     const weight = caseManager.getEvidenceWeight();
-    createText(this, W / 2, 300, `${found.length} evidência(s) coletada(s)  ·  Peso total: ${weight}`, {
+    createText(this, W / 2, 333, `${found.length} evidência(s) coletada(s)  ·  Peso total: ${weight}`, {
       fontSize: '12px', fontFamily: 'Arial, sans-serif', color: '#888866'
     }).setOrigin(0.5, 0.5);
 

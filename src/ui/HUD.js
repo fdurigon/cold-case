@@ -81,7 +81,7 @@ export default class HUD {
     const s     = this.scene;
     const tools = toolSystem.tools;
     const W = 960, BAR_H = 42, BAR_Y = 540 - BAR_H;
-    const BTN_W = 88, BTN_H = 30, GAP = 6;
+    const BTN_W = 130, BTN_H = 30, GAP = 6;
     const totalW = tools.length * BTN_W + (tools.length - 1) * GAP;
     const startX = (W - totalW) / 2;
 
