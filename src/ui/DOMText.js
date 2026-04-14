@@ -89,16 +89,36 @@ export default function createText(scene, x, y, text, style = {}) {
     return this;
   };
 
-  // Override setInteractive so that useHandCursor also applies 'pointer' cursor
-  // to the DOM element itself. Phaser only changes canvas.style.cursor, which is
-  // invisible when the DOM overlay sits on top.
+  // Override setInteractive: enable native DOM pointer events so the element
+  // can be clicked directly (Phaser's canvas-based hit testing doesn't work
+  // reliably for DOMElements whose size may be 0 at creation time).
   const _origSetInteractive = dom.setInteractive.bind(dom);
   dom.setInteractive = function (config) {
     const result = _origSetInteractive(config);
     if (config && config.useHandCursor) {
       el.style.cursor = 'pointer';
     }
+    // Allow this element to capture mouse/touch events directly instead of
+    // relying on Phaser's canvas-based hit testing.
+    el.style.pointerEvents = 'auto';
     return result;
+  };
+
+  // Map Phaser-style pointer event names to native DOM events when the element
+  // has pointer events enabled (i.e. after setInteractive is called).
+  const _origOn = dom.on.bind(dom);
+  dom.on = function (event, handler, context, ...rest) {
+    if (el.style.pointerEvents !== 'none') {
+      const domEvent =
+        event === 'pointerdown' ? 'click'     :
+        event === 'pointerover' ? 'mouseover' :
+        event === 'pointerout'  ? 'mouseout'  : null;
+      if (domEvent) {
+        el.addEventListener(domEvent, handler);
+        return this;
+      }
+    }
+    return _origOn(event, handler, context, ...rest);
   };
 
   // Force initial size measurement so .width / .height are available
