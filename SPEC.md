@@ -320,6 +320,11 @@ Inspired by Scotland Yard. Small, hand-drawn-style pixel map per case. Locations
 - A location gets a marker icon if evidence was found there
 - Player navigates between locations freely (no movement cost in v1)
 
+**HUD top bar (MapScene):**
+- `Evidências` — opens Evidence Board overlay
+- `Suspeitos` — navigates to SuspectsScene
+- `Sair` (dimmed) — fades out and returns to CaseSelectScene; active case progress is preserved in localStorage (not abandoned)
+
 ---
 
 ## 9. Location Scene (Search Loop)

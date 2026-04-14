@@ -26,6 +26,7 @@ export default class HUD {
     this._onBack             = options.onBack             || null;
     this._onEvidenceBoard    = options.onEvidenceBoard    || null;
     this._onSuspects         = options.onSuspects         || null;
+    this._onExit             = options.onExit             || null;
 
     this._toolBtns = [];
     this._depth    = options.depth ?? 100;
@@ -59,6 +60,12 @@ export default class HUD {
       });
     }
 
+    if (this._onExit) {
+      this._makeTopBtn(s, 680, H / 2, 'Sair', () => {
+        this._onExit();
+      }, '#888866');
+    }
+
     if (this._showBack) {
       this._makeTopBtn(s, 950, H / 2, '← Voltar', () => {
         if (this._onBack) this._onBack();
@@ -66,13 +73,13 @@ export default class HUD {
     }
   }
 
-  _makeTopBtn(scene, x, y, label, cb) {
+  _makeTopBtn(scene, x, y, label, cb, color = C.textAccent) {
     const btn = createText(scene, x, y, label, {
-      fontSize: '12px', fontFamily: 'Arial, sans-serif', color: C.textAccent
+      fontSize: '12px', fontFamily: 'Arial, sans-serif', color
     }).setOrigin(1, 0.5).setDepth(this._depth + 1).setInteractive({ useHandCursor: true });
 
     btn.on('pointerover', () => btn.setColor('#e8d5a3'));
-    btn.on('pointerout',  () => btn.setColor(C.textAccent));
+    btn.on('pointerout',  () => btn.setColor(color));
     btn.on('pointerdown', cb);
     return btn;
   }
